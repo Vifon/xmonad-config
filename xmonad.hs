@@ -161,6 +161,7 @@ myKeymap =
   [ ("M-r"           , shellPromptHere myXPConfig)
   , ("M-C-p"         , resetWSName >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
+  , ("M-S-="         , resetWSName)
   , ("M-p"           , selectWorkspace myXPConfig)
   , ("M-S-p"         , withWorkspace myXPConfig (windows . W.shift))
   , ("M-S-<Backspace>", withWorkspace myXPConfig
