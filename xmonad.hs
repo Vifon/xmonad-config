@@ -288,7 +288,8 @@ browserLayout = withIM (2%5) (Not isBrowser) tabbed'
                 browserClasses = ["Chromium", "Chromium-browser", "luakit", "Firefox", "Opera"]
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf) ]
+    [ ((modm .|. shiftMask, xK_space), resetLayouts) ]
+  where resetLayouts = setLayout $ XMonad.layoutHook conf
 
 myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
