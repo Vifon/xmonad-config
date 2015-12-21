@@ -134,7 +134,7 @@ myConfig h = baseConfig
         , modMask       = mod4Mask
         , keys          = myKeys
         , mouseBindings = myMouseBindings
-        , layoutHook    = gaps [(U,21)] . avoidStruts . boringWindows
+        , layoutHook    = gaps [(U,20)] . avoidStruts . boringWindows
                           $ onWorkspace "browser" (named "browser" (commonLayoutHook browserLayout)
                                                    ||| commonLayouts)
                           $ onWorkspace "float" (named "floating" (commonLayoutHook simplestFloat)
