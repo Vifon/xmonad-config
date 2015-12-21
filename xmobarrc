@@ -25,10 +25,15 @@ Config { font = "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true,FontAw
                       , "-h", "green" ] 470
                     , Run DiskU [ ("/", " <free>iB")]
                                 [ ] 3000
-                    , Run Volume "default" "Master" [] 50
+                    , Run Volume "default" "Master"
+                      [ "-t", "<status> <volume>%"
+                      , "--"
+                      , "-O", "", "-C", "grey"
+                      , "-o", "", "-c", "red"
+                       ] 50
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=#888888>%disku%</fc> | %battery% | %default:Master%| <fc=#ee9a00> %date%</fc>"
+       , template = "%StdinReader% }{ <fc=#888888>%disku%</fc> | %battery% | %default:Master% | <fc=#ee9a00> %date%</fc>"
        }
