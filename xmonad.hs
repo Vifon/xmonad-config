@@ -169,7 +169,7 @@ myKeymap =
   , ("M-C-<Backspace>", resetWSName >> removeWorkspace)
   , ("M-S-q"         , kill1)
   , ("M-S-s"         , banish UpperRight)
-  , ("M-C-s"         , warp)
+  , ("M-C-s"         , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
   , ("M-d"           , sendMessage NextLayout)
   , ("M-<Tab>"       , focusUrgentOr $ cycleRecentWS [xK_Super_L] xK_Tab xK_q)
@@ -237,8 +237,8 @@ myKeymap =
   ++
   -- monitor switching
   [("M-" ++ m ++ "a", action)
-  | (m, action) <- [(""  , nextScreen >> warp)
-                   ,("S-", shiftNextScreen >> nextScreen >> warp)
+  | (m, action) <- [(""  , nextScreen >> warp')
+                   ,("S-", shiftNextScreen >> nextScreen >> warp')
                    ,("C-", swapNextScreen)]]
   where toggleOrView'  = toggleOrDoSkip [] view
         maximizeWindow = withFocused $ sendMessage . maximizeRestore
@@ -310,6 +310,19 @@ exit = do
 
 warp :: X ()
 warp = warpToWindow (1%2) (1%2)
+
+warpScreen :: X ()
+warpScreen = do
+  ws <- gets windowset
+  let screen = W.screen . W.current $ ws
+  warpToScreen screen (1%2) (1%2)
+
+warp' :: X ()
+warp' = do
+  windowCount <- currentWindowCount
+  if windowCount == 0
+    then warpScreen
+    else warp
 
 currentStack :: X (Maybe (W.Stack Window))
 currentStack = (W.stack . W.workspace . W.current) `fmap` gets windowset
