@@ -230,7 +230,7 @@ myKeymap =
   -- workspace switching
   [("M-" ++ m ++ i, f i)
   | i <- myWorkspaces
-  , (m, f) <- [(""     , toggleOrView')
+  , (m, f) <- [(""     , warpIfScreenChanges . toggleOrView')
               ,("S-"   , windows . W.shift)
               ,("S-M1-", windows . copy)
               ,("C-"   , Labels.swapWithCurrent)]]
@@ -323,6 +323,15 @@ warp' = do
   if windowCount == 0
     then warpScreen
     else warp
+
+warpIfScreenChanges :: X () -> X ()
+warpIfScreenChanges x = do
+  screenBefore <- currentScreen
+  x
+  screenAfter <- currentScreen
+  when (screenBefore /= screenAfter)
+    warp'
+  where currentScreen = (W.screen . W.current) <$> gets windowset
 
 currentStack :: X (Maybe (W.Stack Window))
 currentStack = (W.stack . W.workspace . W.current) `fmap` gets windowset
