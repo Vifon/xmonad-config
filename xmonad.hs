@@ -243,7 +243,7 @@ myKeymap =
                    ,("C-", swapNextScreen)]]
   where toggleOrView'  = toggleOrDoSkip [] view
         maximizeWindow = withFocused $ sendMessage . maximizeRestore
-        view           = W.view
+        view           = W.greedyView
         resetWSName    = Labels.setCurrentWorkspaceName ""
 
 myWorkspaces = map show [0..9]
