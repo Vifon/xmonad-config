@@ -169,7 +169,7 @@ myKeymap =
   , ("M-C-<Backspace>", resetWSName >> removeWorkspace)
   , ("M-S-q"         , kill1)
   , ("M-S-s"         , banish UpperRight)
-  , ("M-C-s"         , warp')
+  , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
   , ("M-d"           , sendMessage NextLayout)
   , ("M-<Tab>"       , warpIfScreenChanges . focusUrgentOr
@@ -226,7 +226,7 @@ myKeymap =
                      ,("M-g"  , "grid")
                      ,("M-S-f", "full")
                      ,("M-c"  , "tabbed")
-                     ,("M-s"  , "dishes")]]
+                     ,("M-C-s", "dishes")]]
   ++
   -- workspace switching
   [("M-" ++ m ++ i, f i)
