@@ -190,7 +190,8 @@ myKeymap =
   , ("M-,"           , sendMessage (IncMasterN 1))
   , ("M-."           , sendMessage (IncMasterN (-1)))
   , ("M-S-e"         , exit)
-  , ("M-S-r"         , spawn "xmonad --recompile && xmonad --restart")
+  , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad.err \
+                             \ || xmessage -file ~/.xmonad.err")
   ]
   ++
   [ (key, maximizeWindow)
