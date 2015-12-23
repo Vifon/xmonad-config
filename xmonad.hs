@@ -181,6 +181,7 @@ myKeymap =
   , ("M-b"           , withFocused minimizeWindow)
   , ("M-S-b"         , sendMessage RestoreNextMinimizedWin)
   , ("M-<Return>"    , dwmpromote)
+  , ("M5-<Return>"   , dwmpromote)
   , ("M-S-<Return>"  , promote)
   , ("M-S-j"         , windows W.swapDown)
   , ("M-S-k"         , windows W.swapUp)
