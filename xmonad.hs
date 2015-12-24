@@ -18,6 +18,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.DwmPromote
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.FloatSnap
+import XMonad.Actions.Navigation2D
 import XMonad.Actions.Promote
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.SwapWorkspaces
@@ -66,7 +67,8 @@ import System.IO
 main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar"
-  xmonad $ withUrgencyHookC BorderUrgencyHook { urgencyBorderColor = "red" }
+  xmonad $ withNavigation2DConfig myNavigation2DConfig
+         $ withUrgencyHookC BorderUrgencyHook { urgencyBorderColor = "red" }
                             urgencyConfig { suppressWhen = Focused }
     $ myConfig xmproc
     `additionalKeysP`
@@ -87,6 +89,8 @@ commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "full"   (smartBorders Full)
             ||| named "tabbed" (commonLayoutHook tabbed')
   where tall = Tall 1 (3/100) (1/2)
+
+myNavigation2DConfig = defaultNavigation2DConfig { defaultTiledNavigation = centerNavigation }
 
 baseConfig = desktopConfig
 
@@ -199,6 +203,15 @@ myKeymap =
   | key <- ["M-f"
            ,"M-<Backspace>"
            ,"M5-<Backspace>"]]
+  ++
+  -- 2D navigation
+  [ (m ++ k, f dir False)
+  | (m, f) <- [("M-"  , windowGo)
+              ,("M-C-", windowSwap)]
+  , (k, dir) <- [("<Up>"   , U)
+                ,("<Down>" , D)
+                ,("<Left>" , L)
+                ,("<Right>", R)]]
   ++
   -- z/x switches prev/next workspaces
   -- with control empty workspaces are not skipped
