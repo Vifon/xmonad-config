@@ -173,6 +173,7 @@ myKeymap =
                         (windows . copy))
   , ("M-C-<Backspace>", resetWSName >> removeWorkspace)
   , ("M-S-q"         , kill1)
+  , ("M-S-M1-q"      , killAllOtherCopies)
   , ("M-S-s"         , banish' (1%50) UpperRight)
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
