@@ -76,7 +76,7 @@ main = do
 
 term = "urxvtcd"
 
-mySortOrder = getSortByTag
+mySortOrder = getSortByIndex
 
 commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
 
@@ -246,8 +246,8 @@ myKeymap =
                      ,("M-C-s", "dishes")]]
   ++
   -- workspace switching
-  [("M-" ++ m ++ i, f i)
-  | i <- myWorkspaces
+  [("M-" ++ m ++ k, f i)
+  | (i, k) <- zip myWorkspaces myWorkspacesKeys
   , (m, f) <- [(""     , warpIfScreenChanges . toggleOrView')
               ,("S-"   , windows . W.shift)
               ,("S-M1-", windows . copy)
@@ -263,7 +263,8 @@ myKeymap =
         view           = W.greedyView
         resetWSName    = Labels.setCurrentWorkspaceName ""
 
-myWorkspaces = map show [0..9]
+myWorkspaces     = map show $ [1..10]
+myWorkspacesKeys = map show $ [1..9] ++ [0]
 
 myManageHook = composeAll
     [ isFullscreen --> doFullFloat
