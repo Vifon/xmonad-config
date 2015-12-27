@@ -172,7 +172,7 @@ myKeymap =
                         (windows . copy))
   , ("M-C-<Backspace>", resetWSName >> removeWorkspace)
   , ("M-S-q"         , kill1)
-  , ("M-S-s"         , banish UpperRight)
+  , ("M-S-s"         , banish' (1%50) UpperRight)
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
   , ("M-d"           , sendMessage NextLayout)
@@ -339,6 +339,15 @@ warp' = do
   if windowCount == 0
     then warpScreen
     else warp
+
+banish' :: Rational -> Corner ->  X ()
+banish' margin direction = case direction of
+  LowerRight -> warpToWindow max max
+  LowerLeft  -> warpToWindow min max
+  UpperLeft  -> warpToWindow min min
+  UpperRight -> warpToWindow max min
+  where min = 0 + margin
+        max = 1 - margin
 
 warpIfScreenChanges :: X () -> X ()
 warpIfScreenChanges x = do
