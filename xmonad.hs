@@ -135,6 +135,7 @@ myLogHook h = do
 
 myConfig h = baseConfig
         { terminal      = term
+        , clickJustFocuses = False
         , modMask       = mod4Mask
         , keys          = myKeys
         , mouseBindings = myMouseBindings
