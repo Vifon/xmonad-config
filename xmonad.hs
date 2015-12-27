@@ -118,7 +118,7 @@ workspaceCopiesPP trans pp = do
   --
   -- Use identity (id) if you don't need this functionality.
   copies <- wsContainingCopies
-  let checkCopies ws | ws `elem` copies = (xmobarColor "red" "black" . trans) ws
+  let checkCopies ws | ws `elem` copies = (xmobarColor "red" "" . trans) ws
                      | otherwise = ws
   return $ pp
     { ppHidden = ppHidden pp . checkCopies
