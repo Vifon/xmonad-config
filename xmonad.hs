@@ -109,6 +109,18 @@ myPP h = xmobarPP
     , ppUrgent          = xmobarColor "white" "red" . pad
     }
 
+windowCountPP :: PP -> X PP
+windowCountPP pp = do
+  ws <- currentStack
+  let wc = windowCount ws
+      wn = maybe 0 currentWindowIndex ws
+  return pp { ppLayout = addCounter wn wc
+                       $ ppLayout pp
+            }
+    where addCounter wn wc trans layout
+            | wc > 1    = trans layout ++ " [" ++ show wn ++ "/" ++ show wc ++ "]"
+            | otherwise = trans layout
+
 workspaceCopiesPP :: (WorkspaceId -> String) -> PP -> X PP
 workspaceCopiesPP trans pp = do
   -- It takes an additional transformation to apply at the same time,
@@ -131,6 +143,7 @@ myLogHook h = do
   return pp
     >>= Labels.workspaceNamesPP -- <- The order of these two is important.
     >>= workspaceCopiesPP names -- <-
+    >>= windowCountPP
     >>= dynamicLogWithPP
 
 myConfig h = baseConfig
@@ -367,6 +380,9 @@ currentStack = (W.stack . W.workspace . W.current) `fmap` gets windowset
 windowCount :: (Maybe (W.Stack Window)) -> Int
 windowCount Nothing = 0
 windowCount (Just (W.Stack focus up dn)) = 1 + length up + length dn
+
+currentWindowIndex :: W.Stack Window -> Int
+currentWindowIndex (W.Stack _ up _) = 1 + length up
 
 currentWindowCount :: X Int
 currentWindowCount = windowCount `fmap` currentStack
