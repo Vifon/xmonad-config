@@ -97,16 +97,20 @@ baseConfig = desktopConfig
 myPP :: Handle -> PP
 myPP h = xmobarPP
     { ppOutput          = hPutStrLn h
-    , ppTitle           = xmobarColor "#4dafff" "" . shorten 100
-    , ppLayout          = xmobarColor "green"   ""
-    , ppCurrent         = xmobarColor "white"  "#4169e1" . pad
-    , ppVisible         = xmobarColor "white"  "#2139b1" . pad
+    , ppTitle           = xmobarColor "#4dafff" ""
+                        . shorten 100
+    , ppLayout          = xmobarColor "green" ""
+    , ppCurrent         = xmobarColor "white" "#4169e1"
+                        . pad
+    , ppVisible         = xmobarColor "white" "#2139b1"
+                        . pad
     , ppHiddenNoWindows = xmobarColor "#555555" ""
     , ppSep             = xmobarColor "#aaaaaa" "" " : "
     , ppSort            = mySortOrder
     , ppExtras          = [ willFloatAllNewPP (xmobarColor "red"  "")
                           , willFloatNextPP   (xmobarColor "cyan" "") ]
-    , ppUrgent          = xmobarColor "white" "red" . pad
+    , ppUrgent          = xmobarColor "white" "red"
+                        . pad
     }
 
 windowCountPP :: PP -> X PP
@@ -375,9 +379,9 @@ warpIfScreenChanges x = do
   where currentScreen = (W.screen . W.current) <$> gets windowset
 
 currentStack :: X (Maybe (W.Stack Window))
-currentStack = (W.stack . W.workspace . W.current) `fmap` gets windowset
+currentStack = (W.stack . W.workspace . W.current) <$> gets windowset
 
-windowCount :: (Maybe (W.Stack Window)) -> Int
+windowCount :: Maybe (W.Stack Window) -> Int
 windowCount Nothing = 0
 windowCount (Just (W.Stack focus up dn)) = 1 + length up + length dn
 
@@ -385,7 +389,7 @@ currentWindowIndex :: W.Stack Window -> Int
 currentWindowIndex (W.Stack _ up _) = 1 + length up
 
 currentWindowCount :: X Int
-currentWindowCount = windowCount `fmap` currentStack
+currentWindowCount = windowCount <$> currentStack
 
 focusUrgentOr :: X () -> X ()
 focusUrgentOr x = do
