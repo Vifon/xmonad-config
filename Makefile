@@ -4,9 +4,11 @@ all: xmonad run
 xmonad: xmonad.hs
 	ghc -threaded --make xmonad.hs
 
+.PHONY: clean
 clean:
 	@ rm -f xmonad xmonad.hi xmonad.o
 
+.PHONY: run
 run: xmonad
 	xmonad --restart
 
