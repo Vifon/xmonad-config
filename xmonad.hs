@@ -112,7 +112,10 @@ myPP h = xmobarPP
                           , willFloatNextPP   (xmobarColor "cyan" "") ]
     , ppUrgent          = xmobarColor "white" "red"
                         . pad
+    , ppOrder           = myOrder
     }
+  where myOrder (ws:l:t:ex) = (ws:l:ex) ++ [t]
+        myOrder defaultOrder = defaultOrder
 
 windowCountPP :: PP -> X PP
 windowCountPP pp = do
