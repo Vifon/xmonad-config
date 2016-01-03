@@ -35,6 +35,8 @@ import XMonad.Layout.LayoutBuilder
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Maximize
 import XMonad.Layout.Minimize
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders hiding (Never)
 import XMonad.Layout.PerWorkspace
@@ -84,7 +86,6 @@ commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "dishes" (commonLayoutHook $ StackTile 2 (3/100) (2/3))
             ||| named "tabbed split" (commonLayoutHook tallTabbed)
             ||| named "spiral" (commonLayoutHook $ spiral (6/7))
-            ||| named "hsplit" (commonLayoutHook $ Mirror tall)
             ||| named "grid"   (commonLayoutHook Grid)
             ||| named "full"   (smartBorders Full)
             ||| named "tabbed" (commonLayoutHook tabbed')
@@ -156,7 +157,10 @@ myConfig h = baseConfig
         , modMask       = mod4Mask
         , keys          = myKeys
         , mouseBindings = myMouseBindings
-        , layoutHook    = gaps [(U,20)] . avoidStruts . boringWindows
+        , layoutHook    = gaps [(U,20)]
+                          . avoidStruts
+                          . boringWindows
+                          . mkToggle (single MIRROR)
                           $ onWorkspace "browser" (named "browser" (commonLayoutHook browserLayout)
                                                    ||| commonLayouts)
                           $ onWorkspace "float" (named "floating" (commonLayoutHook simplestFloat)
@@ -213,6 +217,7 @@ myKeymap =
   , ("M-t"           , withFocused $ windows . W.sink)
   , ("M-,"           , sendMessage (IncMasterN 1))
   , ("M-."           , sendMessage (IncMasterN (-1)))
+  , ("M-C-r"         , sendMessage $ Toggle MIRROR)
   , ("M-S-e"         , exit)
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad.err \
                              \ || xmessage -file ~/.xmonad.err")
