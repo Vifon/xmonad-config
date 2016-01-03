@@ -119,12 +119,12 @@ myPP h = xmobarPP
 
 windowCountPP :: PP -> X PP
 windowCountPP pp = do
+  -- It could have been done with ppExtras but I prefer the counter to
+  -- be shown alongside the layout, without any separators in between.
   ws <- currentStack
   let wc = windowCount ws
       wn = maybe 0 currentWindowIndex ws
-  return pp { ppLayout = addCounter wn wc
-                       $ ppLayout pp
-            }
+  return pp { ppLayout = addCounter wn wc $ ppLayout pp }
     where addCounter wn wc trans layout
             | wc > 1    = trans layout ++ " [" ++ show wn ++ "/" ++ show wc ++ "]"
             | otherwise = trans layout
