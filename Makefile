@@ -1,5 +1,5 @@
 .PHONY: all
-all: clean xmonad run
+all: xmonad run
 
 xmonad: xmonad.hs
 	ghc -threaded --make xmonad.hs
