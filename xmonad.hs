@@ -260,7 +260,9 @@ myKeymap =
   | (modifier, action) <- [(""  , windows . view)
                           ,("C-", \ws -> (windows . W.shift) ws
                                       >> (windows . view) ws)
-                          ,("S-",   windows . W.shift)]]
+                          ,("S-", windows . W.shift)
+                          ,("S-M1-", \ws -> (windows . copy) ws
+                                         >> (windows . view) ws)]]
   ++
   [(key, sendMessage $ JumpToLayout layout)
   | (key, layout) <- [("M-v"  , "tabbed split")
