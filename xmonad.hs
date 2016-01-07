@@ -50,6 +50,7 @@ import XMonad.Layout.TwoPane
 import XMonad.Config.Desktop
 
 import XMonad.Prompt
+import XMonad.Prompt.AppendFile
 
 import XMonad.Util.EZConfig
 import XMonad.Util.Run (spawnPipe, runProcessWithInput)
@@ -63,6 +64,7 @@ import qualified Data.Map as M
 import Control.Applicative ( (<$>) )
 import Control.Monad.State
 
+import System.Directory
 import System.Exit
 import System.IO
 
@@ -188,6 +190,9 @@ myConfig h = baseConfig
 
 myKeymap =
   [ ("M-r"           , shellPromptHere myXPConfig)
+  , ("M-o"           , do
+        home <- io getHomeDirectory
+        appendFilePrompt myXPConfig $ home ++ "/.xmonad/notes")
   , ("M-C-p"         , resetWSName >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
   , ("M-S-="         , resetWSName)
