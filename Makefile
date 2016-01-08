@@ -12,6 +12,10 @@ clean:
 run: xmonad
 	xmonad --restart
 
+.PHONY: doc
+doc:
+	haddock --source-module "../%F" -h -o doc $(wildcard *.hs)
+
 .PHONY: pack
 pack: xmonad.tar.gz
 xmonad.tar.gz: xmonad.hs xmobarrc xmonad Makefile

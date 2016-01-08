@@ -1,3 +1,5 @@
+module Main where
+
 {-# LANGUAGE ImplicitParams #-}
 import XMonad hiding ( (|||) )  -- there is a modified version of ||| in XMonad.Layout.LayoutCombinators
 import qualified XMonad.StackSet as W
@@ -354,20 +356,26 @@ myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   where magicSnapThreshold = 30
 
 
+-- | Ask the user using 'dmenu' for a confirmation and then close
+-- XMonad (or not).
 exit :: X ()
 exit = do
   response <- runProcessWithInput "dmenu" ["-p", "Really quit?"] "no\nyes\n"
   when (response == "yes\n") $ io (exitWith ExitSuccess)
 
+-- | Move the mouse cursor to the center of the current window.
 warp :: X ()
 warp = warpToWindow (1%2) (1%2)
 
+-- | Move the mouse cursor to the center of the current screen.
 warpScreen :: X ()
 warpScreen = do
   ws <- gets windowset
   let screen = W.screen . W.current $ ws
   warpToScreen screen (1%2) (1%2)
 
+-- | Move the mouse cursor to the center of the current window. If
+-- there are no windows, center the cursor on the screen.
 warp' :: X ()
 warp' = do
   windowCount <- currentWindowCount
@@ -375,6 +383,8 @@ warp' = do
     then warpScreen
     else warp
 
+-- | Move the mouse cursor to the upper right corner of the current
+-- window with some margin.
 banish' :: Rational -> Corner ->  X ()
 banish' margin direction = case direction of
   LowerRight -> warpToWindow max max
@@ -397,19 +407,25 @@ ifScreenChanges action x = do
     action
   where currentScreen = (W.screen . W.current) <$> gets windowset
 
+-- | Current workspace window stack.
 currentStack :: X (Maybe (W.Stack Window))
 currentStack = (W.stack . W.workspace . W.current) <$> gets windowset
 
+-- | Number of windows in a possibly empty stack.
 windowCount :: Maybe (W.Stack Window) -> Int
 windowCount Nothing = 0
 windowCount (Just (W.Stack focus up dn)) = 1 + length up + length dn
 
+-- | Index of the current window in the stack.
 currentWindowIndex :: W.Stack Window -> Int
 currentWindowIndex (W.Stack _ up _) = 1 + length up
 
+-- | Number of windows on the current workspace.
 currentWindowCount :: X Int
 currentWindowCount = windowCount <$> currentStack
 
+-- | Focus the urgent window if there are any. Otherwise perform the
+-- passed action.
 focusUrgentOr :: X () -> X ()
 focusUrgentOr x = do
   urgents <- readUrgents
