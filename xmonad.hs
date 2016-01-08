@@ -207,7 +207,7 @@ myKeymap =
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
   , ("M-d"           , sendMessage NextLayout)
-  , ("M-<Tab>"       , warpIfScreenChanges . focusUrgentOr
+  , ("M-<Tab>"       , ifScreenChanges warp' . focusUrgentOr
                        $ cycleRecentWS [xK_Super_L] xK_Tab xK_q)
   , ("M-q"           , toggleWS)
   , ("M-j"           , focusDown)
@@ -237,7 +237,7 @@ myKeymap =
            ,"M5-<Backspace>"]]
   ++
   -- 2D navigation
-  [ (m ++ k, f dir False)
+  [ (m ++ k, ifScreenChanges warp' $ f dir False)
   | (m, f) <- [("M-"  , windowGo)
               ,("M-C-", windowSwap)]
   , (k, dir) <- [("<Up>"   , U)
@@ -280,7 +280,7 @@ myKeymap =
   -- workspace switching
   [("M-" ++ m ++ k, f i)
   | (i, k) <- zip myWorkspaces myWorkspacesKeys
-  , (m, f) <- [(""     , warpIfScreenChanges . toggleOrView')
+  , (m, f) <- [(""     , ifScreenChanges warp' . toggleOrView')
               ,("S-"   , windows . W.shift)
               ,("S-M1-", windows . copy)
               ,("C-"   , Labels.swapWithCurrent)]]
@@ -384,13 +384,17 @@ banish' margin direction = case direction of
   where min = 0 + margin
         max = 1 - margin
 
-warpIfScreenChanges :: X () -> X ()
-warpIfScreenChanges x = do
+-- | Perform the first action only if the second action changes the
+-- active screen.
+ifScreenChanges :: X () -- ^ Action performed conditionally.
+                -> X () -- ^ Action that may change the screen.
+                -> X ()
+ifScreenChanges action x = do
   screenBefore <- currentScreen
   x
   screenAfter <- currentScreen
   when (screenBefore /= screenAfter)
-    warp'
+    action
   where currentScreen = (W.screen . W.current) <$> gets windowset
 
 currentStack :: X (Maybe (W.Stack Window))
