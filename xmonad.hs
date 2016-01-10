@@ -53,6 +53,7 @@ import XMonad.Config.Desktop
 
 import XMonad.Prompt
 import XMonad.Prompt.AppendFile
+import XMonad.Prompt.ConfirmPrompt
 
 import XMonad.Util.EZConfig
 import XMonad.Util.Run (spawnPipe, runProcessWithInput)
@@ -300,6 +301,7 @@ myKeymap =
         maximizeWindow = withFocused $ sendMessage . maximizeRestore
         view           = W.greedyView
         resetWSName    = Labels.setCurrentWorkspaceName ""
+        exit = confirmPrompt myXPConfig "exit" $ io (exitWith ExitSuccess)
 
 myWorkspaces     = map show $ [1..10]
 myWorkspacesKeys = map show $ [1..9] ++ [0]
@@ -358,14 +360,6 @@ myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                                                                     (Just magicSnapThreshold) w))
     ]
   where magicSnapThreshold = 30
-
-
--- | Ask the user using 'dmenu' for a confirmation and then close
--- XMonad (or not).
-exit :: X ()
-exit = do
-  response <- runProcessWithInput "dmenu" ["-p", "Really quit?"] "no\nyes\n"
-  when (response == "yes\n") $ io (exitWith ExitSuccess)
 
 -- | Move the mouse cursor to the center of the current window.
 warp :: X ()
