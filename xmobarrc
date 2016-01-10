@@ -15,7 +15,7 @@ Config { font = "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true,FontAw
                       , "-L", "20", "-H", "70", "-p", "0"
                       , "-l", "red", "-n", "yellow", "-h", "green"
                       , "--"
-                      , "-O", "<fc=#00ff00>+</fc><left><fc=#00ff00></fc> (<watts>W), <timeleft>"
+                      , "-O", "+<left> (<watts>W), <timeleft>"
                       , "-o", "<left> (<watts>W), <timeleft>"
                       , "-i", "<fc=#ffff00></fc>"
                       , "-L", "-15", "-H", "-5"
