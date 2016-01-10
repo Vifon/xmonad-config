@@ -95,7 +95,7 @@ commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "tabbed" (commonLayoutHook tabbed')
   where tall = Tall 1 (3/100) (1/2)
 
-myNavigation2DConfig = defaultNavigation2DConfig { defaultTiledNavigation = centerNavigation }
+myNavigation2DConfig = def { defaultTiledNavigation = centerNavigation }
 
 baseConfig = desktopConfig
 
@@ -310,17 +310,17 @@ myFont size = "xft:Bitstream Vera Sans Mono:size="
            ++ show size
            ++ ":bold:antialias=true"
 
-myXPConfig = defaultXPConfig { position = Bottom
-                             , historySize = 10
-                             , font = myFont 12
-                             , promptKeymap = emacsLikeXPKeymap' isWordSeparator
-                             , historyFilter = deleteAllDuplicates
-                             } where isWordSeparator c = isSpace c || c == '/'
+myXPConfig = def { position = Bottom
+                 , historySize = 10
+                 , font = myFont 12
+                 , promptKeymap = emacsLikeXPKeymap' isWordSeparator
+                 , historyFilter = deleteAllDuplicates
+                 } where isWordSeparator c = isSpace c || c == '/'
 
-myTabbedTheme = defaultTheme { fontName = myFont 10
-                             , activeColor       = "#00688b"
-                             , activeBorderColor = "#009acd"
-                             }
+myTabbedTheme = def { fontName = myFont 10
+                    , activeColor       = "#00688b"
+                    , activeBorderColor = "#009acd"
+                    }
 
 tabbed' = tabbed shrinkText myTabbedTheme
 
