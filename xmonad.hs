@@ -44,10 +44,10 @@ import XMonad.Layout.NoBorders hiding (Never)
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Spacing
-import XMonad.Layout.Spiral
 import XMonad.Layout.StackTile
 import XMonad.Layout.Tabbed
 import XMonad.Layout.TwoPane
+import qualified XMonad.Layout.Dwindle as Dwindle
 
 import XMonad.Config.Desktop
 
@@ -93,7 +93,7 @@ commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
 commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "dishes" (commonLayoutHook $ StackTile 2 (3/100) (2/3))
             ||| named "tabbed split" (commonLayoutHook tallTabbed)
-            ||| named "spiral" (commonLayoutHook $ spiral (6/7))
+            ||| named "dwindle"(commonLayoutHook $ Dwindle.Dwindle R Dwindle.CW 1.5 1.1)
             ||| named "grid"   (commonLayoutHook Grid)
             ||| named "full"   (smartBorders Full)
             ||| named "tabbed" (commonLayoutHook tabbed')
