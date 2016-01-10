@@ -72,13 +72,17 @@ import System.IO
 
 main :: IO ()
 main = do
-  xmproc <- spawnPipe "xmobar"
+  xmproc <- spawnPipe xmobarCommand
   xmonad $ withNavigation2DConfig myNavigation2DConfig
          $ withUrgencyHookC BorderUrgencyHook { urgencyBorderColor = "red" }
                             urgencyConfig { suppressWhen = Focused }
     $ myConfig xmproc
     `additionalKeysP`
     myKeymap
+  where xmobarCommand =
+          "cabal --require-sandbox \
+          \ --sandbox-config-file=$HOME/.xmonad/cabal.sandbox.config \
+          \ exec xmobar"
 
 term = "urxvtcd"
 

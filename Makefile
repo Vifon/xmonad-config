@@ -2,7 +2,7 @@
 all: xmonad run
 
 xmonad: xmonad.hs
-	ghc -threaded --make xmonad.hs
+	cabal exec -- ghc -threaded --make xmonad.hs
 
 .PHONY: clean
 clean:
@@ -26,9 +26,15 @@ install:
 	ln -s ${PWD} ~/.xmonad
 	ln -s ~/.xmonad/xmobarrc ~/.xmobarrc
 
-.PHONY: cabal install-xmonad install-xmobar
-cabal: install-xmonad install-xmobar
+.PHONY: cabal-sandbox install-xmonad install-xmonad-contrib install-xmobar cabal
+cabal: cabal-sandbox install-xmonad install-xmonad-contrib install-xmobar
+cabal-sandbox: cabal.sandbox.config .cabal-sandbox
 install-xmonad:
-	cabal install xmonad
+	cabal --require-sandbox install xmonad
+install-xmonad-contrib:
+	cabal --require-sandbox install xmonad-contrib --flags='use_xft'
 install-xmobar:
-	cabal install xmobar --flags='with_xft with_utf8 with_alsa with_datezone with_threaded'
+	cabal --require-sandbox install xmobar --flags='with_xft with_utf8 with_alsa with_datezone with_threaded'
+
+.cabal-sandbox cabal.sandbox.config:
+	cabal sandbox init
