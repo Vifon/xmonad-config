@@ -172,7 +172,7 @@ myConfig h = baseConfig
         , layoutHook    = gaps [(U,20)]
                           . avoidStruts
                           . boringWindows
-                          . mkToggle (single MIRROR)
+                          . mkToggle (MIRROR ?? NBFULL ?? EOT)
                           $ onWorkspace "browser" (named "browser" (commonLayoutHook browserLayout)
                                                    ||| commonLayouts)
                           $ onWorkspace "float" (named "floating" (commonLayoutHook simplestFloat)
@@ -233,14 +233,14 @@ myKeymap =
   , ("M-,"           , sendMessage (IncMasterN 1))
   , ("M-."           , sendMessage (IncMasterN (-1)))
   , ("M-C-r"         , sendMessage $ Toggle MIRROR)
+  , ("M-f"           , sendMessage $ Toggle NBFULL)
   , ("M-S-e"         , exit)
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad.err \
                              \ || xmessage -file ~/.xmonad.err")
   ]
   ++
   [ (key, maximizeWindow)
-  | key <- ["M-f"
-           ,"M-<Backspace>"
+  | key <- ["M-<Backspace>"
            ,"M5-<Backspace>"]]
   ++
   -- 2D navigation
