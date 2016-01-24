@@ -14,7 +14,7 @@ run: xmonad
 
 .PHONY: doc
 doc:
-	haddock --source-module "../%F" -h -o doc $(wildcard *.hs)
+	cabal exec -- haddock --source-module "../%F" -h -o doc $(wildcard *.hs)
 
 .PHONY: pack
 pack: xmonad.tar.gz
