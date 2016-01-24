@@ -161,9 +161,7 @@ workspaceCopiesPP trans pp = do
   copies <- wsContainingCopies
   let checkCopies ws | ws `elem` copies = (xmobarColor "red" "" . trans) ws
                      | otherwise = ws
-  return $ pp
-    { ppHidden = ppHidden pp . checkCopies
-    }
+  return pp { ppHidden = ppHidden pp . checkCopies }
 
 myLogHook :: Handle -> X ()
 myLogHook h = do
@@ -212,7 +210,8 @@ myKeymap =
   [ ("M-r"           , shellPromptHere myXPConfig)
   , ("M-o"           , do
         home <- io getHomeDirectory
-        appendFilePrompt myXPConfig $ home ++ "/.xmonad/notes")
+        let path = home ++ "/.xmonad/notes"
+        appendFilePrompt myXPConfig path)
   , ("M-C-p"         , resetWSName >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
   , ("M-S-="         , resetWSName)
