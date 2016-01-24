@@ -248,8 +248,8 @@ myKeymap =
   , ("M-C-r"         , sendMessage $ Toggle MIRROR)
   , ("M-f"           , sendMessage $ Toggle NBFULL)
   , ("M-S-e"         , exit)
-  , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad.err \
-                             \ || xmessage -file ~/.xmonad.err")
+  , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
+                             \ || xmessage -file ~/.xmonad/xmonad.err")
   ]
   ++
   [ (key, maximizeWindow)
