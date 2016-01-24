@@ -126,6 +126,18 @@ myPP h = xmobarPP
   where myOrder (ws:l:t:ex) = (ws:l:ex) ++ [t]
         myOrder defaultOrder = defaultOrder
 
+-- | Override the layout name color depending on the currently used layout.
+perLayoutColorPP :: PP -> X PP
+perLayoutColorPP pp = do
+  return pp { ppLayout = ppLayout pp . perLayoutColor }
+    where perLayoutColor layoutName =
+            let style = case layoutName of
+                  "Full"   -> fg "red"
+                  _        -> id
+            in style layoutName
+          fg c = xmobarColor c ""
+          bg c = xmobarColor "" c
+
 windowCountPP :: PP -> X PP
 windowCountPP pp = do
   -- It could have been done with ppExtras but I prefer the counter to
@@ -161,6 +173,7 @@ myLogHook h = do
     >>= Labels.workspaceNamesPP -- <- The order of these two is important.
     >>= workspaceCopiesPP names -- <-
     >>= windowCountPP
+    >>= perLayoutColorPP
     >>= dynamicLogWithPP
 
 myConfig h = baseConfig
