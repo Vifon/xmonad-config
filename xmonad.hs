@@ -145,10 +145,10 @@ windowCountPP pp = do
   ws <- currentStack
   let wc = windowCount ws
       wn = maybe 0 currentWindowIndex ws
-  return pp { ppLayout = addCounter wn wc $ ppLayout pp }
-    where addCounter wn wc trans layout
-            | wc > 1    = trans layout ++ " [" ++ show wn ++ "/" ++ show wc ++ "]"
-            | otherwise = trans layout
+  return pp { ppLayout = addCounter wn wc . ppLayout pp }
+    where addCounter wn wc layout
+            | wc > 1    = layout ++ " [" ++ show wn ++ "/" ++ show wc ++ "]"
+            | otherwise = layout
 
 workspaceCopiesPP :: (WorkspaceId -> String) -> PP -> X PP
 workspaceCopiesPP trans pp = do
