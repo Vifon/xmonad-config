@@ -163,13 +163,19 @@ workspaceCopiesPP trans pp = do
                      | otherwise = ws
   return pp { ppHidden = ppHidden pp . checkCopies }
 
+workspaceNamesWithCopiesPP :: PP -> X PP
+workspaceNamesWithCopiesPP pp = do
+  -- The order of these two PP transformers is important.
+  names <- Labels.getWorkspaceNames
+  return pp
+    >>= Labels.workspaceNamesPP
+    >>= workspaceCopiesPP names
+
 myLogHook :: Handle -> X ()
 myLogHook h = do
-  names <- Labels.getWorkspaceNames
   let pp = myPP h
   return pp
-    >>= Labels.workspaceNamesPP -- <- The order of these two is important.
-    >>= workspaceCopiesPP names -- <-
+    >>= workspaceNamesWithCopiesPP
     >>= windowCountPP
     >>= perLayoutColorPP
     >>= dynamicLogWithPP
