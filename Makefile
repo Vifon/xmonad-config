@@ -22,8 +22,11 @@ xmonad.tar.gz: xmonad.hs xmobarrc xmonad Makefile
 	tar zvcf xmonad.tar.gz -C .. $(foreach file,$^,.xmonad/${file}) .xmobarrc
 
 .PHONY: install
-install:
+install: ~/.xmonad ~/.xmobarrc
+
+~/.xmonad:
 	ln -s ${PWD} ~/.xmonad
+~/.xmobarrc:
 	ln -s ~/.xmonad/xmobarrc ~/.xmobarrc
 
 .PHONY: cabal-sandbox install-xmonad install-xmonad-contrib install-xmobar cabal
