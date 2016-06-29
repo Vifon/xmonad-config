@@ -63,6 +63,7 @@ import XMonad.Util.WorkspaceCompare
 import Data.Char
 import Data.Maybe
 import Data.Ratio ( (%) )
+import Data.Tuple
 import qualified Data.Map as M
 
 import Control.Applicative ( (<$>) )
@@ -204,6 +205,7 @@ myConfig h = baseConfig
                       <+> manageHook baseConfig
         , startupHook   = startupHook baseConfig
                        >> checkKeymap (myConfig h) myKeymap
+                       >> labelMyWorkspaces
                        >> fixJava
         , workspaces    = myWorkspaces
         , logHook       = logHook baseConfig <+> myLogHook h
@@ -325,6 +327,19 @@ myKeymap =
 
 myWorkspaces     = map show $ [1..10]
 myWorkspacesKeys = map show $ [1..9] ++ [0]
+
+data WSLabels =
+  WSLabels [String]                -- ^ Ordered labels
+           [(WorkspaceId, String)] -- ^ Unordered labels
+myWorkspacesLabels :: WSLabels
+myWorkspacesLabels = WSLabels ["www" , "IRC"] []
+
+labelMyWorkspaces :: X ()
+labelMyWorkspaces = do
+  let WSLabels ordered random = myWorkspacesLabels
+  uncurry Labels.setWorkspaceName `mapM_` zip (show <$> [1..]) ordered
+  uncurry Labels.setWorkspaceName `mapM_` random
+  return ()
 
 myManageHook = composeAll
     [ isFullscreen --> doFullFloat
