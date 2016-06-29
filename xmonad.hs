@@ -23,6 +23,7 @@ import XMonad.Actions.FloatSnap
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.Promote
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.Submap
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Actions.Warp
 import qualified XMonad.Actions.FlexibleResize as Flex
@@ -366,7 +367,17 @@ browserLayout = withIM (2%5) (Not isBrowser) tabbed'
                 browserClasses = ["Chromium", "Chromium-browser", "luakit", "Firefox", "Opera"]
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. shiftMask, xK_space), resetLayouts) ]
+    [ ((modm .|. shiftMask, xK_space), resetLayouts)
+    , ((modm, xK_apostrophe), submap . mkKeymap conf $
+        [ ("p", spawnHere "pavucontrol")
+        , ("m", spawnHere "thunderbird")
+        , ("S-m", spawnHere "mumble")
+        , ("s", spawnHere "synergy")
+        , ("t", spawnHere "telegram")
+        , ("S-t", spawnHere "transmission-gtk")
+        , ("k", spawnHere "keepassx")
+        ])
+    ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
 
 myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
