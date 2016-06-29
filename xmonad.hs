@@ -333,16 +333,16 @@ myManageHook = composeAll
 
 myFont size = "xft:Bitstream Vera Sans Mono:size="
            ++ show size
-           ++ ":bold:antialias=true"
+           ++ ":antialias=true"
 
 myXPConfig = def { position = Bottom
                  , historySize = 10
-                 , font = myFont 12
+                 , font = myFont 12 ++ ":bold"
                  , promptKeymap = emacsLikeXPKeymap' isWordSeparator
                  , historyFilter = deleteAllDuplicates
                  } where isWordSeparator c = isSpace c || c == '/'
 
-myTabbedTheme = def { fontName = myFont 10
+myTabbedTheme = def { fontName = myFont 10 ++ ":bold"
                     , activeColor       = "#00688b"
                     , activeBorderColor = "#009acd"
                     }
