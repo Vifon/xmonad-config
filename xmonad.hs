@@ -391,6 +391,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("t", spawnHere "telegram")
         , ("S-t", spawnHere "transmission-gtk")
         , ("k", spawnHere "keepassx")
+        , ("[", spawnHere "touch ~/.pomodoro_session")
+        , ("]", spawnHere "rm -f ~/.pomodoro_session")
         ])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
