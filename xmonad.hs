@@ -255,6 +255,7 @@ myKeymap =
   , ("M-S-e"         , exit)
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
                              \ || xmessage -file ~/.xmonad/xmonad.err")
+  , ("M-S-m"         , floatNext True >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run")
   ]
   ++
   [ (key, maximizeWindow)
