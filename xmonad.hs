@@ -94,7 +94,7 @@ commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
 commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "dishes" (commonLayoutHook $ StackTile 2 (3/100) (2/3))
             ||| named "tabbed split" (commonLayoutHook tallTabbed)
-            ||| named "spiral" (commonLayoutHook $ Dwindle.Spiral R Dwindle.CW 1.5 1.1)
+            ||| named "dwindle" (commonLayoutHook $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
             ||| named "grid"   (commonLayoutHook Grid)
             ||| named "full"   (smartBorders Full)
             ||| named "tabbed" (commonLayoutHook tabbed')
@@ -295,7 +295,7 @@ myKeymap =
                                          >> (windows . view) ws)]]
   ++
   [(key, sendMessage $ JumpToLayout layout)
-  | (key, layout) <- [("M-v"  , "spiral")
+  | (key, layout) <- [("M-v"  , "dwindle")
                      ,("M-S-v", "vsplit")
                      ,("M-g"  , "grid")
                      ,("M-S-f", "full")
