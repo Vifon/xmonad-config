@@ -335,11 +335,11 @@ myWorkspacesLabels :: WSLabels
 myWorkspacesLabels = WSLabels ["www" , "IRC"] []
 
 labelMyWorkspaces :: X ()
-labelMyWorkspaces = do
-  let WSLabels ordered unordered = myWorkspacesLabels
+labelMyWorkspaces =
   uncurry Labels.setWorkspaceName `mapM_` (enumerate ordered ++ unordered)
-    where seq_ids = show <$> [1..]
-          enumerate = zip seq_ids
+  where WSLabels ordered unordered = myWorkspacesLabels
+        seq_ids = show <$> [1..]
+        enumerate = zip seq_ids
 
 myManageHook = composeAll
     [ isFullscreen --> doFullFloat
