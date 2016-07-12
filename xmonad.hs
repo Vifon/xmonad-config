@@ -221,14 +221,14 @@ myKeymap =
         home <- io getHomeDirectory
         let path = home ++ "/.xmonad/notes"
         appendFilePrompt myXPConfig path)
-  , ("M-C-p"         , resetWSName >> renameWorkspace myXPConfig)
+  , ("M-C-p"         , resetWSLabel >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
   , ("M-S-="         , resetWSName)
   , ("M-p"           , selectWorkspace myXPConfig)
   , ("M-S-p"         , withWorkspace myXPConfig (windows . W.shift))
   , ("M-S-<Backspace>", withWorkspace myXPConfig
                         (windows . copy))
-  , ("M-C-<Backspace>", resetWSName >> removeWorkspace)
+  , ("M-C-<Backspace>", resetWSLabel >> removeWorkspace)
   , ("M-S-q"         , kill1)
   , ("M-S-M1-q"      , killAllOtherCopies)
   , ("M-S-s"         , banish' (1%50) UpperRight)
@@ -322,7 +322,7 @@ myKeymap =
   where toggleOrView'  = toggleOrDoSkip [] view
         maximizeWindow = withFocused $ sendMessage . maximizeRestore
         view           = W.greedyView
-        resetWSName    = Labels.setCurrentWorkspaceName ""
+        resetWSLabel   = Labels.setCurrentWorkspaceName ""
         exit = confirmPrompt myXPConfig "exit" $ io (exitWith ExitSuccess)
 
 myWorkspaces     = map show $ [1..10]
