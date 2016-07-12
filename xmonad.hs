@@ -235,6 +235,7 @@ myKeymap =
   , ("M-S-s"         , banish' (1%50) UpperRight)
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
+  , ("M-S-d"         , sendMessage ToggleGaps >> sendMessage ToggleStruts)
   , ("M-d"           , sendMessage NextLayout)
   , ("M-<Tab>"       , ifScreenChanges warp' . focusUrgentOr
                        $ cycleRecentWS [xK_Super_L] xK_Tab xK_q)
