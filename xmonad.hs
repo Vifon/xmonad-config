@@ -223,7 +223,8 @@ myKeymap =
         appendFilePrompt myXPConfig path)
   , ("M-C-p"         , resetWSLabel >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
-  , ("M-S-="         , resetWSName)
+  , ("M-S-="         , resetWSLabel)
+  , ("M-M1-="        , labelMyWorkspaces)
   , ("M-p"           , selectWorkspace myXPConfig)
   , ("M-S-p"         , withWorkspace myXPConfig (windows . W.shift))
   , ("M-S-<Backspace>", withWorkspace myXPConfig
