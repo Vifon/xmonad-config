@@ -1,6 +1,5 @@
 module Main where
 
-{-# LANGUAGE ImplicitParams #-}
 import XMonad hiding ( (|||) )  -- there is a modified version of ||| in XMonad.Layout.LayoutCombinators
 import qualified XMonad.StackSet as W
 
