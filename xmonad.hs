@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts #-}
 module Main where
 
 import XMonad hiding ( (|||) )  -- there is a modified version of ||| in XMonad.Layout.LayoutCombinators
