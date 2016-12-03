@@ -394,6 +394,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("k", spawnHere "keepassx")
         , ("[", spawnHere "touch ~/.pomodoro_session")
         , ("]", spawnHere "rm -f ~/.pomodoro_session")
+        , ("1", spawnHere "~/.screenlayout/single.sh")
+        , ("2", spawnHere "~/.screenlayout/multidisplay.sh")
         ])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
