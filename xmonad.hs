@@ -4,6 +4,7 @@ module Main where
 import XMonad hiding ( (|||) )  -- there is a modified version of ||| in XMonad.Layout.LayoutCombinators
 import qualified XMonad.StackSet as W
 
+import XMonad.Hooks.DebugStack
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FloatNext
@@ -72,6 +73,7 @@ import Control.Monad.State
 import System.Directory
 import System.Exit
 import System.IO
+import System.Process
 
 main :: IO ()
 main = do
@@ -404,6 +406,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("]", spawnHere "rm -f ~/.pomodoro_session")
         , ("1", spawnHere "~/.screenlayout/single.sh")
         , ("2", spawnHere "~/.screenlayout/multidisplay.sh")
+        , ("S-d", debugStackString >>= \stack -> io $ do
+              (Just std_in, _, _, _) <- createProcess (proc "zenity"
+                                                        [ "--text-info"
+                                                        , "--font"
+                                                        , "monospace 10"])
+                                        { std_in = CreatePipe }
+              hPutStr std_in stack
+              hClose std_in)
         ])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
