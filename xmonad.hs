@@ -396,7 +396,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         [ ("p", spawnHere "pavucontrol")
         , ("m", spawnHere "thunderbird")
         , ("S-m", spawnHere "mumble")
-        , ("s", spawnHere "synergy")
+        , ("s", spawnHere "run-one synergy")
         , ("t", spawnHere "telegram")
         , ("S-t", spawnHere "transmission-gtk")
         , ("k", spawnHere "keepassx")
