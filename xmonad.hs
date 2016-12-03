@@ -27,6 +27,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.Submap
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Actions.Warp
+import XMonad.Actions.WindowGo
 import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.Actions.WorkspaceNames as Labels
 
@@ -399,7 +400,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("m", spawnHere "thunderbird")
         , ("S-m", spawnHere "mumble")
         , ("s", spawnHere "run-one synergy")
-        , ("t", spawnHere "telegram")
+        , ("t", runOrRaise "telegram" (className =? "Telegram"))
         , ("S-t", spawnHere "transmission-gtk")
         , ("k", spawnHere "keepassx")
         , ("[", spawnHere "touch ~/.pomodoro_session")
