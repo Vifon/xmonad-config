@@ -204,7 +204,7 @@ myConfig h = baseConfig
                       <+> manageHook baseConfig
         , startupHook   = startupHook baseConfig
                        >> checkKeymap (myConfig h) myKeymap
-                       >> labelMyWorkspaces
+                       >> labelWorkspaces myWorkspacesLabels
                        >> fixJava
         , workspaces    = myWorkspaces
         , logHook       = logHook baseConfig <+> myLogHook h
@@ -223,7 +223,8 @@ myKeymap =
   , ("M-C-p"         , resetWSLabel >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
   , ("M-S-="         , resetWSLabel)
-  , ("M-M1-="        , labelMyWorkspaces)
+  , ("M-M1-="        , labelWorkspaces myWorkspacesLabels)
+  , ("M-M1-["        , labelWorkspaces myWorkspacesLabelsWork)
   , ("M-p"           , selectWorkspace myXPConfig)
   , ("M-S-p"         , withWorkspace myXPConfig (windows . W.shift))
   , ("M-S-<Backspace>", withWorkspace myXPConfig
@@ -333,13 +334,19 @@ myWorkspacesKeys = map show $ [1..9] ++ [0]
 data WSLabels =
   WSLabels [String]                -- ^ Ordered labels
            [(WorkspaceId, String)] -- ^ Unordered labels
-myWorkspacesLabels :: WSLabels
-myWorkspacesLabels = WSLabels ["www" , "IRC"] []
 
-labelMyWorkspaces :: X ()
-labelMyWorkspaces =
+myWorkspacesLabels :: WSLabels
+myWorkspacesLabels = WSLabels ["www" , "IRC", "", "", ""] [("10","")]
+
+myWorkspacesLabelsWork :: WSLabels
+myWorkspacesLabelsWork = WSLabels
+                           ["www" , "IRC", "chat", "code", "scratch"]
+                           [("10","worklogs")]
+
+labelWorkspaces :: WSLabels -> X ()
+labelWorkspaces labels =
   uncurry Labels.setWorkspaceName `mapM_` (enumerate ordered ++ unordered)
-  where WSLabels ordered unordered = myWorkspacesLabels
+  where WSLabels ordered unordered = labels
         seq_ids = show <$> [1..]
         enumerate = zip seq_ids
 
