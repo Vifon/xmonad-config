@@ -188,8 +188,7 @@ myConfig h = baseConfig
         , modMask       = mod4Mask
         , keys          = myKeys
         , mouseBindings = myMouseBindings
-        , layoutHook    = gaps [(U,20)]
-                          . avoidStruts
+        , layoutHook    = avoidStruts
                           . boringWindows
                           . mkToggle (MIRROR ?? NBFULL ?? EOT)
                           $ onWorkspace "browser" (named "browser" (commonLayoutHook browserLayout)
