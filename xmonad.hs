@@ -398,8 +398,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_apostrophe), submap . mkKeymap conf $
         [ ("p", spawnHere "pavucontrol")
         , ("m", spawnHere "thunderbird")
-        , ("S-m", spawnHere "mumble")
         , ("s", spawnHere "run-one synergy")
+        , ("S-s", runOrRaise "signal" (resource =? signalResource))
         , ("t", runOrRaise "telegram" (className =? "Telegram"))
         , ("S-t", spawnHere "transmission-gtk")
         , ("k", spawnHere "keepassx")
@@ -418,6 +418,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         ])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
+        signalResource = "crx_bikioccmkafdpakkkcpdbppfkghcmihk"
 
 myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
