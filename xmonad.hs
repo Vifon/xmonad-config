@@ -400,7 +400,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("m", spawnHere "thunderbird")
         , ("s", spawnHere "run-one synergy")
         , ("S-s", runOrRaise "signal" (resource =? signalResource))
-        , ("t", runOrRaise "telegram" (className =? "Telegram"))
+        , ("t", runOrRaise "telegram" (className =? "TelegramDesktop"))
         , ("S-t", spawnHere "transmission-gtk")
         , ("k", spawnHere "keepassx")
         , ("[", spawnHere "touch ~/.pomodoro_session")
