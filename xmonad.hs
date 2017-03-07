@@ -301,8 +301,8 @@ myKeymap =
                           ,("C-", \ws -> (windows . W.shift) ws
                                       >> (windows . view) ws)
                           ,("S-", windows . W.shift)
-                          ,("S-M1-", \ws -> (windows . copy) ws
-                                         >> (windows . view) ws)]]
+                          ,("M1-", \ws -> (windows . copy) ws
+                                       >> (windows . view) ws)]]
   ++
   [(key, sendMessage $ JumpToLayout layout)
   | (key, layout) <- [("M-v"  , "dwindle")
