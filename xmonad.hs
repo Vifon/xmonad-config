@@ -407,6 +407,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("]", spawnHere "rm -f ~/.pomodoro_session")
         , ("1", spawnHere "~/.screenlayout/single.sh")
         , ("2", spawnHere "~/.screenlayout/multidisplay.sh")
+        , ("3", spawnHere "~/.screenlayout/external.sh")
         , ("S-d", debugStackString >>= \stack -> io $ do
               (Just std_in, _, _, _) <- createProcess (proc "zenity"
                                                         [ "--text-info"
