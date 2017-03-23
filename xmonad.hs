@@ -408,18 +408,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("1", spawnHere "~/.screenlayout/single.sh")
         , ("2", spawnHere "~/.screenlayout/multidisplay.sh")
         , ("3", spawnHere "~/.screenlayout/external.sh")
-        , ("S-d", debugStackString >>= \stack -> io $ do
-              (Just std_in, _, _, _) <- createProcess (proc "zenity"
-                                                        [ "--text-info"
-                                                        , "--font"
-                                                        , "monospace 10"])
-                                        { std_in = CreatePipe }
-              hPutStr std_in stack
-              hClose std_in)
+        , ("S-d", debugStackString >>= io . displayText)
         ])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
         signalResource = "crx_bikioccmkafdpakkkcpdbppfkghcmihk"
+        displayText text = do
+          (Just std_in, _, _, _) <- createProcess (proc "zenity"
+                                                        [ "--text-info"
+                                                        , "--font"
+                                                        , "monospace 10"])
+                                    { std_in = CreatePipe }
+          hPutStr std_in text
+          hClose std_in
 
 myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
