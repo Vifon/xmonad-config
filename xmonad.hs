@@ -319,7 +319,7 @@ myKeymap =
   | (i, k) <- zip myWorkspaces myWorkspacesKeys
   , (m, f) <- [(""     , ifScreenChanges warp' . toggleOrView')
               ,("S-"   , windows . W.shift)
-              ,("S-M1-", windows . copy)
+              ,("M1-", windows . copy)
               ,("C-"   , Labels.swapWithCurrent)]]
   ++
   -- monitor switching
