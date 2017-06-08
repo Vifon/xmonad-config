@@ -219,13 +219,15 @@ myConfig h = baseConfig
 
 myKeymap =
   [ ("M-r"           , shellPromptHere myXPConfig)
-  , ("M-o"           , do
+  , ("M-u"           , do
         home <- io getHomeDirectory
         let path = home ++ "/.xmonad/notes"
         appendFilePrompt myXPConfig path)
   , ("M-C-p"         , resetWSLabel >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
   , ("M-S-="         , resetWSLabel)
+  , ("M-o"           , Labels.renameWorkspace myXPConfig)
+  , ("M-S-o"         , resetWSLabel)
   , ("M-M1-="        , labelWorkspaces myWorkspacesLabels)
   , ("M-M1-["        , labelWorkspaces myWorkspacesLabelsWork)
   , ("M-p"           , selectWorkspace myXPConfig)
