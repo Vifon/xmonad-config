@@ -240,7 +240,7 @@ myKeymap =
   , ("M-S-s"         , banish' (1%50) UpperRight)
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
-  , ("M-S-;"         , spawn "compton --config ~/.xmonad/compton-focus-dim.conf& sleep 1.5; kill $!")
+  , ("M-S-;"         , spawn "pkill compton || compton --config ~/.xmonad/compton-focus-dim.conf")
   , ("M-S-d"         , sendMessage ToggleGaps >> sendMessage ToggleStruts)
   , ("M-d"           , sendMessage NextLayout)
   , ("M-<Tab>"       , ifScreenChanges warp' . focusUrgentOr
