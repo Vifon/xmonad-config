@@ -398,7 +398,8 @@ browserLayout = withIM (2%5) (Not isBrowser) tabbed'
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
     , ((modm, xK_apostrophe), submap . mkKeymap conf $
-        [ ("p", spawnHere "pavucontrol")
+        [ ("g", runOrRaise "gnucash" (className =? "Gnucash"))
+        , ("p", spawnHere "pavucontrol")
         , ("m", spawnHere "thunderbird")
         , ("S-s", spawnHere "run-one synergy")
         , ("s", runOrRaise "signal" (resource =? signalResource))
