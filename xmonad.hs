@@ -400,8 +400,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_apostrophe), submap . mkKeymap conf $
         [ ("p", spawnHere "pavucontrol")
         , ("m", spawnHere "thunderbird")
-        , ("s", spawnHere "run-one synergy")
-        , ("S-s", runOrRaise "signal" (resource =? signalResource))
+        , ("S-s", spawnHere "run-one synergy")
+        , ("s", runOrRaise "signal" (resource =? signalResource))
         , ("t", runOrRaise "telegram" (className =? "TelegramDesktop"))
         , ("S-t", spawnHere "transmission-gtk")
         , ("k", spawnHere "keepassx")
