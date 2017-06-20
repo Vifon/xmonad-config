@@ -299,6 +299,7 @@ myKeymap =
   -- M-w   - switch to empty desktop
   -- M-S-w - send to empty desktop
   -- M-C-w - send to empty desktop and switch there
+  -- M-A-w - clone to empty desktop and switch there
   [("M-" ++ modifier ++ "w", doTo Next EmptyWS mySortOrder action)
   | (modifier, action) <- [(""  , windows . view)
                           ,("C-", \ws -> (windows . W.shift) ws
