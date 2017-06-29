@@ -23,6 +23,7 @@ import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.Promote
+import XMonad.Actions.ShowText
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.Submap
 import XMonad.Actions.SwapWorkspaces
@@ -214,7 +215,9 @@ myConfig h = baseConfig
                        >> fixJava
         , workspaces    = myWorkspaces
         , logHook       = logHook baseConfig <+> myLogHook h
-        , handleEventHook = handleEventHook baseConfig <+> fullscreenEventHook
+        , handleEventHook = handleEventHook baseConfig
+                        <+> fullscreenEventHook
+                        <+> handleTimerEvent
         , focusedBorderColor = "#00bfff"
         , normalBorderColor  = "#2f4f4f"
         }
@@ -245,7 +248,7 @@ myKeymap =
   , ("M-;"           , toggleFloatNext >> runLogHook)
   , ("M-S-;"         , spawn "pkill compton || compton --config ~/.xmonad/compton-focus-dim.conf")
   , ("M-S-d"         , sendMessage ToggleGaps >> sendMessage ToggleStruts)
-  , ("M-d"           , sendMessage NextLayout)
+  , ("M-C-d"         , sendMessage NextLayout)
   , ("M-<Tab>"       , ifScreenChanges warp' . focusUrgentOr
                        $ cycleRecentWS [xK_Super_L] xK_Tab xK_q)
   , ("M-q"           , toggleWS)
@@ -418,6 +421,22 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("3", spawnHere "~/.screenlayout/external.sh")
         , ("S-d", debugStackString >>= io . displayText)
         ])
+    , ((modm, xK_d), do
+          let keys = [("v", "vsplit")
+                     ,("d", "dwindle")
+                     ,("S-d", "dishes")
+                     ,("r", "resizable")
+                     ,("w", "twopane")
+                     ,("g", "grid")
+                     ,("t", "tabbed")
+                     ,("S-t", "tabbed split")
+                     ,("f", "full")]
+              sep = "   "
+              arrow = " -> "
+          flashText def 0 $ concat . concat $
+            [[key, arrow, layout, sep] | (key, layout) <- keys]
+          submap . mkKeymap conf $
+            [(key, sendMessage $ JumpToLayout layout) | (key, layout) <- keys])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
         signalResource = "crx_bikioccmkafdpakkkcpdbppfkghcmihk"
