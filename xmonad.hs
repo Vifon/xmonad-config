@@ -40,6 +40,7 @@ import XMonad.Layout.LayoutBuilder
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Maximize
 import XMonad.Layout.Minimize
+import XMonad.Layout.MouseResizableTile
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.Named
@@ -101,6 +102,7 @@ commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "tabbed split" (commonLayoutHook tallTabbed)
             ||| named "dwindle" (commonLayoutHook $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
             ||| named "twopane" (commonLayoutHook $ TwoPane (3/100) (1/2))
+            ||| named "resizable" (minimize . maximize $ mouseResizableTile)
             ||| named "grid"   (commonLayoutHook Grid)
             ||| named "full"   (smartBorders Full)
             ||| named "tabbed" (commonLayoutHook tabbed')
