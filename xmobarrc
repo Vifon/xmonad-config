@@ -31,10 +31,9 @@ Config { font = "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true,FontAw
                       , "-O", "", "-C", "grey"
                       , "-o", "", "-c", "red"
                       ] 10
-                    , Run CommandReader "pymodoro" "pomodoro"
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %pomodoro% | <fc=#888888>%disku%</fc> | %battery% | %default:Master% | <fc=#ee9a00> %date%</fc>"
+       , template = "%StdinReader% }{ <fc=#888888>%disku%</fc> | %battery% | %default:Master% | <fc=#ee9a00> %date%</fc>"
        }
