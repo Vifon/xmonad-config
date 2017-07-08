@@ -23,7 +23,6 @@ import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.Promote
-import XMonad.Actions.ShowText
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.Submap
 import XMonad.Actions.SwapWorkspaces
@@ -218,7 +217,6 @@ myConfig h = baseConfig
         , logHook       = logHook baseConfig <+> myLogHook h
         , handleEventHook = handleEventHook baseConfig
                         <+> fullscreenEventHook
-                        <+> handleTimerEvent
         , focusedBorderColor = "#00bfff"
         , normalBorderColor  = "#2f4f4f"
         }
@@ -446,15 +444,22 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
 
 submapT :: (?conf :: XConfig Layout) => [(String, String, X ())] -> X ()
 submapT spec = do
-  let sep = "   "
-      arrow = " -> "
-  flashText def 0 $ concat . intercalate [sep] $
-    [ [key, arrow, description]
-    | (key, description, _) <- spec
-    , description /= ""
-    ]
+  let outer_sep = "   "
+      inner_sep = ": "
+  let tooltip = concat . intercalate [outer_sep] $
+                [ ["^fg(red)", key, "^fg()", inner_sep, description]
+                | (key, description, _) <- spec
+                , description /= ""
+                ]
+  dzen_std_in <- io $ do
+    (Just std_in, _, _, _) <- createProcess (proc "dzen2" [])
+                              { std_in = CreatePipe }
+    hPutStrLn std_in tooltip
+    hFlush std_in
+    return std_in
   submap . mkKeymap ?conf $
     [ (key, action) | (key, _, action) <- spec ]
+  io $ hClose dzen_std_in
 
 submapT' :: (?conf :: XConfig Layout) => [(String, String)] -> X()
 submapT' spec =
