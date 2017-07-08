@@ -449,9 +449,12 @@ submapT spec = do
   let sep = "   "
       arrow = " -> "
   flashText def 0 $ concat . intercalate [sep] $
-    [[key, arrow, description] | (key, description, _) <- spec]
+    [ [key, arrow, description]
+    | (key, description, _) <- spec
+    , description /= ""
+    ]
   submap . mkKeymap ?conf $
-    [(key, action) | (key, _, action) <- spec]
+    [ (key, action) | (key, _, action) <- spec ]
 
 submapT' :: (?conf :: XConfig Layout) => [(String, String)] -> X()
 submapT' spec =
