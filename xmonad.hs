@@ -65,6 +65,7 @@ import XMonad.Util.Run (spawnPipe, runProcessWithInput)
 import XMonad.Util.WorkspaceCompare
 
 import Data.Char
+import Data.List
 import Data.Maybe
 import Data.Ratio ( (%) )
 import Data.Tuple
@@ -448,8 +449,8 @@ submapT :: [(String, String, X ())] -> XConfig Layout -> X ()
 submapT spec conf = do
   let sep = "   "
       arrow = " -> "
-  flashText def 0 $ concat . concat $
-    [[key, arrow, description, sep] | (key, description, _) <- spec]
+  flashText def 0 $ concat . intercalate [sep] $
+    [[key, arrow, description] | (key, description, _) <- spec]
   submap . mkKeymap conf $
     [(key, action) | (key, _, action) <- spec]
 
