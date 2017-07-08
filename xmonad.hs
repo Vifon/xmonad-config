@@ -421,8 +421,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("3", spawnHere "~/.screenlayout/external.sh")
         , ("S-d", debugStackString >>= io . displayText)
         ])
-    , ((modm, xK_d), do
-          let keys = [("v", "vsplit")
+    , ((modm, xK_d), submapT'
+                     [("v", "vsplit")
                      ,("d", "dwindle")
                      ,("S-d", "dishes")
                      ,("r", "resizable")
@@ -431,12 +431,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                      ,("t", "tabbed")
                      ,("S-t", "tabbed split")
                      ,("f", "full")]
-              sep = "   "
-              arrow = " -> "
-          flashText def 0 $ concat . concat $
-            [[key, arrow, layout, sep] | (key, layout) <- keys]
-          submap . mkKeymap conf $
-            [(key, sendMessage $ JumpToLayout layout) | (key, layout) <- keys])
+                     conf)
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
         signalResource = "crx_bikioccmkafdpakkkcpdbppfkghcmihk"
@@ -448,6 +443,20 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                                     { std_in = CreatePipe }
           hPutStr std_in text
           hClose std_in
+
+submapT :: [(String, String, X ())] -> XConfig Layout -> X ()
+submapT spec conf = do
+  let sep = "   "
+      arrow = " -> "
+  flashText def 0 $ concat . concat $
+    [[key, arrow, description, sep] | (key, description, _) <- spec]
+  submap . mkKeymap conf $
+    [(key, action) | (key, _, action) <- spec]
+
+submapT' :: [(String, String)] -> XConfig Layout -> X()
+submapT' spec =
+  let (keys, layouts) = unzip spec in
+    submapT $ zip3 keys layouts $ sendMessage . JumpToLayout <$> layouts
 
 myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
