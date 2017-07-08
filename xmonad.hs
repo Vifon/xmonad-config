@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts, ImplicitParams #-}
 module Main where
 
 import XMonad hiding ( (|||) )  -- there is a modified version of ||| in XMonad.Layout.LayoutCombinators
@@ -404,7 +404,7 @@ browserLayout = withIM (2%5) (Not isBrowser) tabbed'
           where browserClasses :: [String]
                 browserClasses = ["Chromium", "Chromium-browser", "luakit", "Firefox", "Opera"]
 
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList $
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
     , ((modm, xK_apostrophe), submap . mkKeymap conf $
         [ ("g", runOrRaise "gnucash" (className =? "Gnucash"))
@@ -431,8 +431,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                      ,("g", "grid")
                      ,("t", "tabbed")
                      ,("S-t", "tabbed split")
-                     ,("f", "full")]
-                     conf)
+                     ,("f", "full")])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
         signalResource = "crx_bikioccmkafdpakkkcpdbppfkghcmihk"
@@ -445,16 +444,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
           hPutStr std_in text
           hClose std_in
 
-submapT :: [(String, String, X ())] -> XConfig Layout -> X ()
-submapT spec conf = do
+submapT :: (?conf :: XConfig Layout) => [(String, String, X ())] -> X ()
+submapT spec = do
   let sep = "   "
       arrow = " -> "
   flashText def 0 $ concat . intercalate [sep] $
     [[key, arrow, description] | (key, description, _) <- spec]
-  submap . mkKeymap conf $
+  submap . mkKeymap ?conf $
     [(key, action) | (key, _, action) <- spec]
 
-submapT' :: [(String, String)] -> XConfig Layout -> X()
+submapT' :: (?conf :: XConfig Layout) => [(String, String)] -> X()
 submapT' spec =
   let (keys, layouts) = unzip spec in
     submapT $ zip3 keys layouts $ sendMessage . JumpToLayout <$> layouts
