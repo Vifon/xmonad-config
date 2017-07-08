@@ -404,7 +404,7 @@ browserLayout = withIM (2%5) (Not isBrowser) tabbed'
           where browserClasses :: [String]
                 browserClasses = ["Chromium", "Chromium-browser", "luakit", "Firefox", "Opera"]
 
-myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList $
+myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
     , ((modm, xK_apostrophe), submap . mkKeymap conf $
         [ ("g", runOrRaise "gnucash" (className =? "Gnucash"))
