@@ -442,7 +442,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
           hPutStr std_in text
           hClose std_in
 
-submapT :: (?conf :: XConfig Layout) => [(String, String, X ())] -> X ()
+-- | A high-level wrapper around `submap` that displays a tooltip with
+-- all the keys and their descriptions.
+submapT :: (?conf :: XConfig Layout) -- ^ An implicitly passed XMonad config.
+        => [(String, String, X ())]  -- ^ [(key, description, action)]; don't display if description is empty.
+        -> X ()
 submapT spec = do
   let outer_sep = "   "
       inner_sep = ": "
@@ -461,7 +465,10 @@ submapT spec = do
     [ (key, action) | (key, _, action) <- spec ]
   io $ hClose dzen_std_in
 
-submapT' :: (?conf :: XConfig Layout) => [(String, String)] -> X()
+-- | A specialized version of `submapT` that is used to switch the XMonad layouts.
+submapT' :: (?conf :: XConfig Layout) -- ^ An implicitly passed XMonad config.
+         => [(String, String)]        -- ^ [(key, layoutname)]
+         -> X()
 submapT' spec =
   let (keys, layouts) = unzip spec in
     submapT $ zip3 keys layouts $ sendMessage . JumpToLayout <$> layouts
