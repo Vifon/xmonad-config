@@ -100,7 +100,6 @@ commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
 
 commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "dishes" (commonLayoutHook $ StackTile 2 (3/100) (2/3))
-            ||| named "tabbed split" (commonLayoutHook tallTabbed)
             ||| named "dwindle" (commonLayoutHook $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
             ||| named "twopane" (commonLayoutHook $ TwoPane (3/100) (1/2))
             ||| named "resizable" (minimize . maximize $ mouseResizableTile)
@@ -386,10 +385,6 @@ myTabbedTheme = def { fontName = myFont 10 ++ ":bold"
 
 tabbed' = tabbed shrinkText myTabbedTheme
 
-tallTabbed = layoutN 1 (relBox 0 0 0.5 1) (Just $ relBox 0 0 1 1) Full
-             $ layoutN 1 (relBox 0.5 0 1 0.5) (Just $ relBox 0.5 0 1 1) Full
-             $ layoutAll (relBox 0.5 0.5 1 1) tabbed'
-
 programmingLayout =
   combineTwoP (Mirror $ TwoPane (3/100) (3/4))
               tabbed'
@@ -428,7 +423,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
                      ,("S-d", "dishes")
                      ,("r", "resizable")
                      ,("t", "tabbed")
-                     ,("S-t", "tabbed split")
                      ,("g", "grid")
                      ,("f", "full")])
     ]
