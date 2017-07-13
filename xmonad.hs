@@ -410,6 +410,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("s", "Signal", runOrRaise "signal" (resource =? signalResource))
         , ("t", "Telegram", runOrRaise "telegram" (className =? "TelegramDesktop"))
         , ("k", "KeePassX", spawnHere "keepassx")
+        , ("S-m", "Mumble", spawnHere "mumble")
         , ("p", "pavucontrol", spawnHere "pavucontrol")
         , ("S-s", "Synergy", spawnHere "run-one synergy")
         , ("S-t", "Transmission", spawnHere "transmission-gtk")
