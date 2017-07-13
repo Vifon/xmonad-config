@@ -421,14 +421,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("S-d", "Debug", debugStackString >>= io . displayText)
         ])
     , ((modm, xK_d), submapT'
-                     [("v", "vsplit")
-                     ,("d", "dwindle")
+                     [("d", "dwindle")
+                     ,("w", "twopane")
+                     ,("v", "vsplit")
                      ,("S-d", "dishes")
                      ,("r", "resizable")
-                     ,("w", "twopane")
-                     ,("g", "grid")
                      ,("t", "tabbed")
                      ,("S-t", "tabbed split")
+                     ,("g", "grid")
                      ,("f", "full")])
     ]
   where resetLayouts = setLayout $ XMonad.layoutHook conf
