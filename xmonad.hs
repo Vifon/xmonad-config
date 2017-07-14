@@ -197,8 +197,6 @@ myConfig h = baseConfig
         , layoutHook    = avoidStruts
                           . boringWindows
                           . mkToggle (MIRROR ?? NBFULL ?? EOT)
-                          $ onWorkspace "browser" (named "browser" (commonLayoutHook browserLayout)
-                                                   ||| commonLayouts)
                           $ onWorkspace "float" (named "floating" (commonLayoutHook simplestFloat)
                                                  ||| commonLayouts)
                           $ commonLayouts
@@ -384,18 +382,6 @@ myTabbedTheme = def { fontName = myFont 10 ++ ":bold"
                     }
 
 tabbed' = tabbed shrinkText myTabbedTheme
-
-programmingLayout =
-  combineTwoP (Mirror $ TwoPane (3/100) (3/4))
-              tabbed'
-              (Mirror $ Tall 0 (3/100) (1/2))
-              (Not $ ClassName "URxvt")
-
-browserLayout = withIM (2%5) (Not isBrowser) tabbed'
-  where isBrowser :: Property
-        isBrowser = foldl Or (Const False) $ fmap ClassName browserClasses
-          where browserClasses :: [String]
-                browserClasses = ["Chromium", "Chromium-browser", "luakit", "Firefox", "Opera"]
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
