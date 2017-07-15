@@ -514,6 +514,10 @@ ifScreenChanges action x = do
 currentStack :: X (Maybe (W.Stack Window))
 currentStack = (W.stack . W.workspace . W.current) <$> gets windowset
 
+-- | Current workspace window layout.
+currentLayout :: X (Layout Window)
+currentLayout = (W.layout . W.workspace . W.current) <$> gets windowset
+
 -- | Number of windows in a possibly empty stack.
 windowCount :: Maybe (W.Stack Window) -> Int
 windowCount Nothing = 0
