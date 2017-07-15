@@ -245,6 +245,7 @@ myKeymap =
   , ("M-S-;"         , spawn "pkill compton || compton --config ~/.xmonad/compton-focus-dim.conf")
   , ("M-S-d"         , sendMessage ToggleGaps >> sendMessage ToggleStruts)
   , ("M-C-d"         , sendMessage NextLayout)
+  , ("M-C-<Return>"  , sendMessage NextLayout)
   , ("M-<Tab>"       , ifScreenChanges warp' . focusUrgentOr
                        $ cycleRecentWS [xK_Super_L] xK_Tab xK_q)
   , ("M-q"           , toggleWS)
