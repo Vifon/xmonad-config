@@ -38,6 +38,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutBuilder
 import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.LimitWindows
 import XMonad.Layout.Maximize
 import XMonad.Layout.Minimize
 import XMonad.Layout.MouseResizableTile
@@ -100,7 +101,7 @@ commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
 
 commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "dishes" (commonLayoutHook $ StackTile 2 (3/100) (2/3))
-            ||| named "dwindle" (commonLayoutHook $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
+            ||| named "dwindle" (commonLayoutHook $ limitWindows 8 $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
             ||| named "twopane" (commonLayoutHook $ TwoPane (3/100) (1/2))
             ||| named "resizable" (minimize . maximize $ mouseResizableTile)
             ||| named "grid"   (commonLayoutHook Grid)
