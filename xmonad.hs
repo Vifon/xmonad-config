@@ -412,6 +412,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("S-t", "Transmission", spawnHere "transmission-gtk")
         , ("[", "", spawnHere "touch ~/.pomodoro_session")
         , ("]", "", spawnHere "rm -f ~/.pomodoro_session")
+        , ("S-[", "", spawnHere "pymodoro -l 25 | dzen2")
+        , ("S-]", "", spawnHere "pkill pymodoro")
         , ("1", "", spawnHere "~/.screenlayout/single.sh")
         , ("2", "", spawnHere "~/.screenlayout/multidisplay.sh")
         , ("3", "", spawnHere "~/.screenlayout/external.sh")
