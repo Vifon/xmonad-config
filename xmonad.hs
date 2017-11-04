@@ -270,6 +270,10 @@ myKeymap =
   , ("M-."           , sendMessage (IncMasterN (-1)))
   , ("M-C-r"         , sendMessage $ Toggle MIRROR)
   , ("M-f"           , sendMessage $ Toggle NBFULL)
+  , ("M-C-f"         , do
+        sendMessage $ Toggle NBFULL
+        sendMessage ToggleGaps
+        sendMessage ToggleStruts)
   , ("M-S-e"         , exit)
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
                              \ || xmessage -file ~/.xmonad/xmonad.err")
