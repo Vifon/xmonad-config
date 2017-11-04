@@ -392,7 +392,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         [ ("m", "Thunderbird", spawnHere "thunderbird")
         , ("g", "GnuCash", runOrRaise "gnucash" (className =? "Gnucash"))
         , ("c", "calibre", runOrRaise "calibre" (className =? "libprs500"))
-        , ("s", "Signal", runOrRaise "signal" (resource =? signalResource))
+        , ("s", "Signal", runOrRaise "signal-desktop"
+                          (resource =? signalResource
+                           <||> className =? "Signal"))
         , ("t", "Telegram", runOrRaise "telegram" (className =? "TelegramDesktop"))
         , ("k", "KeePassX", spawnHere "keepassx")
         , ("M-m", "Spotify", runOrRaise "spotify" (className =? "Spotify"))
