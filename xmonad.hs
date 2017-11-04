@@ -23,6 +23,7 @@ import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.Promote
+import XMonad.Actions.RotSlaves
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.Submap
 import XMonad.Actions.SwapWorkspaces
@@ -260,6 +261,8 @@ myKeymap =
   , ("M-S-<Return>"  , promote)
   , ("M-S-j"         , windows W.swapDown)
   , ("M-S-k"         , windows W.swapUp)
+  , ("M-C-j"         , rotSlavesDown)
+  , ("M-C-k"         , rotSlavesUp)
   , ("M-h"           , sendMessage Shrink)
   , ("M-l"           , sendMessage Expand)
   , ("M-t"           , withFocused $ windows . W.sink)
