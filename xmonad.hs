@@ -102,7 +102,7 @@ commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
 commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "dishes" (commonLayoutHook $ StackTile 2 (3/100) (2/3))
             ||| named "dwindle" (commonLayoutHook $ limitWindows 8 $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
-            ||| named "twopane" (commonLayoutHook $ TwoPane (3/100) (1/2))
+            ||| named "twopane" (commonLayoutHook $ limitSelect 1 1 tall)
             ||| named "resizable" (minimize . maximize $ mouseResizableTile)
             ||| named "grid"   (commonLayoutHook Grid)
             ||| named "full"   (smartBorders Full)
