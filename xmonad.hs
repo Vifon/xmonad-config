@@ -398,28 +398,28 @@ tabbed' = tabbed shrinkText myTabbedTheme
 myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
     , ((modm, xK_apostrophe), submapT
-        [ ("m", "Thunderbird", spawnHere "thunderbird")
-        , ("g", "GnuCash", runOrRaise "gnucash" (className =? "Gnucash"))
-        , ("c", "calibre", runOrRaise "calibre" (className =? "libprs500"))
-        , ("s", "Signal", runOrRaise "signal-desktop"
-                          (resource =? signalResource
-                           <||> className =? "Signal"))
-        , ("t", "Telegram", runOrRaise "telegram" (className =? "TelegramDesktop"))
-        , ("k", "KeePassX", spawnHere "keepassx")
-        , ("M-m", "Spotify", runOrRaise "spotify" (className =? "Spotify"))
-        , ("S-m", "Mumble", spawnHere "mumble")
-        , ("p", "pavucontrol", spawnHere "pavucontrol")
-        , ("a", "", spawnHere "arandr")
-        , ("S-s", "Synergy", spawnHere "run-one synergy")
-        , ("S-t", "Transmission", spawnHere "transmission-gtk")
-        , ("[", "", spawnHere "touch ~/.pomodoro_session")
-        , ("]", "", spawnHere "rm -f ~/.pomodoro_session")
-        , ("S-[", "", spawnHere "pymodoro -l 25 | dzen2")
-        , ("S-]", "", spawnHere "pkill pymodoro")
-        , ("1", "", spawnHere "~/.screenlayout/single.sh")
-        , ("2", "", spawnHere "~/.screenlayout/multidisplay.sh")
-        , ("3", "", spawnHere "~/.screenlayout/external.sh")
-        , ("S-d", "Debug", debugStackString >>= io . displayText)
+        [ ("m", Just "Thunderbird", spawnHere "thunderbird")
+        , ("g", Just "GnuCash", runOrRaise "gnucash" (className =? "Gnucash"))
+        , ("c", Just "calibre", runOrRaise "calibre" (className =? "libprs500"))
+        , ("s", Just "Signal", runOrRaise "signal-desktop"
+                               (resource =? signalResource
+                                <||> className =? "Signal"))
+        , ("t", Just "Telegram", runOrRaise "telegram" (className =? "TelegramDesktop"))
+        , ("k", Just "KeePassX", spawnHere "keepassx")
+        , ("M-m", Just "Spotify", runOrRaise "spotify" (className =? "Spotify"))
+        , ("S-m", Just "Mumble", spawnHere "mumble")
+        , ("p", Just "pavucontrol", spawnHere "pavucontrol")
+        , ("a", Nothing, spawnHere "arandr")
+        , ("S-s", Just "Synergy", spawnHere "run-one synergy")
+        , ("S-t", Just "Transmission", spawnHere "transmission-gtk")
+        , ("[", Nothing, spawnHere "touch ~/.pomodoro_session")
+        , ("]", Nothing, spawnHere "rm -f ~/.pomodoro_session")
+        , ("S-[", Nothing, spawnHere "pymodoro -l 25 | dzen2")
+        , ("S-]", Nothing, spawnHere "pkill pymodoro")
+        , ("1", Nothing, spawnHere "~/.screenlayout/single.sh")
+        , ("2", Nothing, spawnHere "~/.screenlayout/multidisplay.sh")
+        , ("3", Nothing, spawnHere "~/.screenlayout/external.sh")
+        , ("S-d", Just "Debug", debugStackString >>= io . displayText)
         ])
     , ((modm, xK_d), submapT'
                      [("d", "dwindle")
@@ -444,16 +444,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
 
 -- | A high-level wrapper around `submap` that displays a tooltip with
 -- all the keys and their descriptions.
-submapT :: (?conf :: XConfig Layout) -- ^ An implicitly passed XMonad config.
-        => [(String, String, X ())]  -- ^ [(key, description, action)]; don't display if description is empty.
+submapT :: (?conf :: XConfig Layout)       -- ^ An implicitly passed XMonad config.
+        => [(String, Maybe String, X ())]  -- ^ [(key, description, action)]; don't display if description is empty.
         -> X ()
 submapT spec = do
   let outer_sep = "   "
       inner_sep = ": "
   let tooltip = concat . intercalate [outer_sep] $
                 [ ["^fg(red)", key, "^fg()", inner_sep, description]
-                | (key, description, _) <- spec
-                , description /= ""
+                | (key, Just description, _) <- spec
                 ]
   dzen_std_in <- io $ do
     (Just std_in, _, _, _) <- createProcess (proc "dzen2" [])
@@ -471,7 +470,7 @@ submapT' :: (?conf :: XConfig Layout) -- ^ An implicitly passed XMonad config.
          -> X()
 submapT' spec =
   let (keys, layouts) = unzip spec in
-    submapT $ zip3 keys layouts $ sendMessage . JumpToLayout <$> layouts
+    submapT $ zip3 keys (Just <$> layouts) $ sendMessage . JumpToLayout <$> layouts
 
 myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
