@@ -409,6 +409,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("M-m", "Spotify", runOrRaise "spotify" (className =? "Spotify"))
         , ("S-m", "Mumble", spawnHere "mumble")
         , ("p", "pavucontrol", spawnHere "pavucontrol")
+        , ("a", "", spawnHere "arandr")
         , ("S-s", "Synergy", spawnHere "run-one synergy")
         , ("S-t", "Transmission", spawnHere "transmission-gtk")
         , ("[", "", spawnHere "touch ~/.pomodoro_session")
