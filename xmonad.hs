@@ -382,7 +382,7 @@ myFont size = "xft:Bitstream Vera Sans Mono:size="
            ++ ":antialias=true"
 
 myXPConfig = def { position = Bottom
-                 , historySize = 10
+                 , historySize = 50
                  , font = myFont 12 ++ ":bold"
                  , promptKeymap = emacsLikeXPKeymap' isWordSeparator
                  , historyFilter = deleteAllDuplicates
