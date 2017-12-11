@@ -218,6 +218,7 @@ myConfig h = baseConfig
                         <+> fullscreenEventHook
         , focusedBorderColor = "#00bfff"
         , normalBorderColor  = "#2f4f4f"
+        , borderWidth        = 1
         }
   where fixJava = setWMName "LG3D"
 
