@@ -281,7 +281,8 @@ myKeymap =
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
                              \ || xmessage -file ~/.xmonad/xmonad.err")
   , ("M-S-m"         , toggleFloatNext >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run")
-  , ("C-M-S-o"       , spawnHere "firefox")
+  , ("C-M-S-o"       , spawnHere "firefox -P default")
+  , ("C-M-S-M5-o"    , spawnHere "firefox -P Business")
   ]
   ++
   [ (key, maximizeWindow)
