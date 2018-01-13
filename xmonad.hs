@@ -99,10 +99,11 @@ term = "urxvtcd"
 mySortOrder = getSortByIndex
 
 commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
+dwindle = named "dwindle" (commonLayoutHook $ limitWindows 8 $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
 
 commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "dishes" (commonLayoutHook $ StackTile 2 (3/100) (2/3))
-            ||| named "dwindle" (commonLayoutHook $ limitWindows 8 $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
+            ||| dwindle
             ||| named "twopane" (commonLayoutHook $ limitSelect 1 1 tall)
             ||| named "resizable" (minimize . maximize $ mouseResizableTile)
             ||| named "grid"   (commonLayoutHook Grid)
@@ -199,6 +200,7 @@ myConfig h = baseConfig
         , layoutHook    = avoidStruts
                           . boringWindows
                           . mkToggle (MIRROR ?? NBFULL ?? EOT)
+                          $ onWorkspace "1" (dwindle ||| commonLayouts)
                           $ onWorkspace "float" (named "floating" (commonLayoutHook simplestFloat)
                                                  ||| commonLayouts)
                           $ commonLayouts
