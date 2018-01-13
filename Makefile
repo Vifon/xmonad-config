@@ -6,7 +6,7 @@ xmonad: xmonad.hs
 
 .PHONY: clean
 clean:
-	@ rm -f xmonad xmonad.hi xmonad.o
+	rm -f xmonad xmonad.hi xmonad.o
 
 .PHONY: run
 run: xmonad
