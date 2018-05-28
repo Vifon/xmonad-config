@@ -30,6 +30,7 @@ import XMonad.Actions.SwapWorkspaces
 import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import qualified XMonad.Actions.FlexibleResize as Flex
+import qualified XMonad.Actions.GridSelect as GridSelect
 import qualified XMonad.Actions.WorkspaceNames as Labels
 
 import XMonad.Layout.BoringWindows
@@ -277,6 +278,7 @@ myKeymap =
         sendMessage $ Toggle NBFULL
         sendMessage ToggleGaps
         sendMessage ToggleStruts)
+  , ("M-i"           , GridSelect.goToSelected def)
   , ("M-S-e"         , exit)
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
                              \ || xmessage -file ~/.xmonad/xmonad.err")
