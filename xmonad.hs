@@ -285,7 +285,9 @@ myKeymap =
   , ("M-S-m"         , mediaPlayer)
   , ("M-<Escape>"    , mediaPlayer)
   , ("C-M-S-o"       , spawnHere "firefox -P default")
-  , ("C-M-S-M5-o"    , spawnHere "firefox -P Business")
+  , ("C-M-S-M5-o"    , ifWindows (className =? "tabbed" <&&> resource =? "surf")
+                                 (\_ -> spawnHere "firefox -P Business")
+                                 (spawnHere "tabbed -n surf surf -e"))
   ]
   ++
   [ (key, maximizeWindow)
