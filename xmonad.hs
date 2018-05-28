@@ -376,6 +376,7 @@ labelWorkspaces labels =
 myManageHook = composeAll
     [ isFullscreen --> doFullFloat
     , className =? "Keepassx" <&&> title =? "Auto-Type - KeePassX" --> doFloat
+    , className =? "TrayCalendar" --> doIgnore
     , manageSpawn
     , manageDocks
     ] where role = stringProperty "WM_WINDOW_ROLE"
