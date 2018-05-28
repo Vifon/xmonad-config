@@ -280,7 +280,8 @@ myKeymap =
   , ("M-S-e"         , exit)
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
                              \ || xmessage -file ~/.xmonad/xmonad.err")
-  , ("M-S-m"         , toggleFloatNext >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run")
+  , ("M-S-m"         , mediaPlayer)
+  , ("M-<Escape>"    , mediaPlayer)
   , ("C-M-S-o"       , spawnHere "firefox -P default")
   , ("C-M-S-M5-o"    , spawnHere "firefox -P Business")
   ]
@@ -350,6 +351,7 @@ myKeymap =
         view           = W.greedyView
         resetWSLabel   = Labels.setCurrentWorkspaceName ""
         exit = confirmPrompt myXPConfig "exit" $ io (exitWith ExitSuccess)
+        mediaPlayer = toggleFloatNext >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run"
 
 myWorkspaces     = map show $ [1..10]
 myWorkspacesKeys = map show $ [1..9] ++ [0]
