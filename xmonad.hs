@@ -410,14 +410,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     , ((modm, xK_apostrophe), submapT
         [ ("m", Just "Notmuch Sync", spawn "notify-send Notmuch Syncing... ; \
                                           \ notify-send Notmuch \"`notmuch new`\"")
-        , ("g", Just "GnuCash", runOrRaise "gnucash" (className =? "Gnucash"))
         , ("c", Just "calibre", runOrRaise "calibre" (className =? "libprs500"))
+        , ("S-c", Just "Chromium", spawnHere "chromium")
         , ("s", Just "Signal", runOrRaise "signal-desktop"
                                (resource =? signalResource
                                 <||> className =? "Signal"))
         , ("t", Just "Telegram", runOrRaise "telegram" (className =? "TelegramDesktop"))
-        , ("k", Just "KeePassX", spawnHere "keepassx")
-        , ("M-m", Just "Spotify", runOrRaise "spotify" (className =? "Spotify"))
         , ("S-m", Just "Mumble", spawnHere "mumble")
         , ("p", Just "pavucontrol", spawnHere "pavucontrol")
         , ("a", Nothing, spawnHere "arandr")
