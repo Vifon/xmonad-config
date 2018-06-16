@@ -408,7 +408,8 @@ tabbed' = tabbed shrinkText myTabbedTheme
 myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
     , ((modm, xK_apostrophe), submapT
-        [ ("m", Just "Thunderbird", spawnHere "thunderbird")
+        [ ("m", Just "Notmuch Sync", spawn "notify-send Notmuch Syncing... ; \
+                                          \ notify-send Notmuch \"`notmuch new`\"")
         , ("g", Just "GnuCash", runOrRaise "gnucash" (className =? "Gnucash"))
         , ("c", Just "calibre", runOrRaise "calibre" (className =? "libprs500"))
         , ("s", Just "Signal", runOrRaise "signal-desktop"
