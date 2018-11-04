@@ -100,7 +100,11 @@ term = "urxvtcd"
 
 mySortOrder = getSortByIndex
 
-commonLayoutHook l = (smartSpacing 2 . minimize . maximize) l
+commonLayoutHook l = spacingRaw True screenBorder True windowBorder True
+                     . minimize . maximize $ l
+  where windowBorder = Border 2 2 2 2
+        screenBorder = windowBorder
+
 dwindle = named "dwindle" (commonLayoutHook $ limitWindows 8 $ Dwindle.Dwindle R Dwindle.CW 1.618 1.1)
 
 commonLayouts = named "vsplit" (commonLayoutHook tall)
