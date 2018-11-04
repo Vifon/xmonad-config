@@ -254,6 +254,7 @@ myKeymap =
   , ("M-C-<Backspace>", resetWSLabel >> removeWorkspace)
   , ("M-S-q"         , kill1)
   , ("M-S-M1-q"      , killAllOtherCopies)
+  , ("M-C-q"         , calculator)
   , ("M-S-s"         , banish' (1%50) UpperRight)
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
@@ -367,6 +368,7 @@ myKeymap =
         resetWSLabel   = Labels.setCurrentWorkspaceName ""
         exit = confirmPrompt myXPConfig "exit" $ io (exitWith ExitSuccess)
         mediaPlayer = toggleFloatNext >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run"
+        calculator  = toggleFloatNext >> spawn "emacsclient -c --eval '(full-calc)'"
 
 myWorkspaces     = map show $ [1..10]
 myWorkspacesKeys = map show $ [1..9] ++ [0]
