@@ -92,9 +92,7 @@ main = do
     `additionalKeysP`
     myKeymap
   where xmobarCommand =
-          "cabal --require-sandbox \
-          \ --sandbox-config-file=$HOME/.xmonad/cabal.sandbox.config \
-          \ exec xmobar"
+          "exec xmobar"
 
 term = "urxvtcd"
 

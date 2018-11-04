@@ -2,7 +2,7 @@
 all: xmonad run
 
 xmonad: xmonad.hs
-	cabal exec -- ghc -threaded --make xmonad.hs
+	ghc -threaded --make xmonad.hs
 
 .PHONY: clean
 clean:
@@ -14,7 +14,7 @@ run: xmonad
 
 .PHONY: doc
 doc:
-	cabal exec -- haddock --source-module "../%F" -h -o doc $(wildcard *.hs)
+	haddock --source-module "../%F" -h -o doc $(wildcard *.hs)
 
 .PHONY: pack
 pack: xmonad.tar.gz
@@ -29,15 +29,11 @@ install: ~/.xmonad ~/.xmobarrc
 ~/.xmobarrc:
 	ln -s ~/.xmonad/xmobarrc ~/.xmobarrc
 
-.PHONY: cabal-sandbox install-xmonad install-xmonad-contrib install-xmobar cabal
-cabal: cabal-sandbox install-xmonad install-xmonad-contrib install-xmobar
-cabal-sandbox: cabal.sandbox.config .cabal-sandbox
+.PHONY: install-xmonad install-xmonad-contrib install-xmobar cabal
+cabal: install-xmonad install-xmonad-contrib install-xmobar
 install-xmonad:
-	cabal --require-sandbox install xmonad
+	cabal install xmonad
 install-xmonad-contrib:
-	cabal --require-sandbox install xmonad-contrib --flags='use_xft'
+	cabal install xmonad-contrib --flags='use_xft'
 install-xmobar:
-	cabal --require-sandbox install xmobar --flags='with_xft with_utf8 with_alsa with_datezone with_threaded'
-
-.cabal-sandbox cabal.sandbox.config:
-	cabal sandbox init
+	cabal install xmobar --flags='with_xft with_utf8 with_alsa with_datezone with_threaded'
