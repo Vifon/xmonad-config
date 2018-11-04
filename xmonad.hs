@@ -283,7 +283,9 @@ myKeymap =
         sendMessage $ Toggle NBFULL
         sendMessage ToggleGaps
         sendMessage ToggleStruts)
-  , ("M-i"           , GridSelect.goToSelected def)
+  , ("M-i"           , GridSelect.goToSelected myGSConfig)
+  , ("M-M1-<Tab>"    , GridSelect.goToSelected myGSConfig)
+  , ("M-S-i"         , GridSelect.bringSelected myGSConfig)
   , ("M-S-e"         , exit)
   , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
                              \ || xmessage -file ~/.xmonad/xmonad.err")
@@ -402,6 +404,9 @@ myXPConfig = def { position = Bottom
                  , promptKeymap = emacsLikeXPKeymap' isWordSeparator
                  , historyFilter = deleteAllDuplicates
                  } where isWordSeparator c = isSpace c || c == '/'
+
+myGSConfig = def { GridSelect.gs_navigate = GridSelect.navNSearch
+                 }
 
 myTabbedTheme = def { fontName = myFont 10 ++ ":bold"
                     , activeColor       = "#00688b"
