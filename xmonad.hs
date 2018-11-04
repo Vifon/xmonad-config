@@ -258,7 +258,7 @@ myKeymap =
   , ("M-S-s"         , banish' (1%50) UpperRight)
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
-  , ("M-S-;"         , spawn "pkill compton || compton --config ~/.xmonad/compton-focus-dim.conf")
+  , ("M-S-;"         , spawn "pkill -e compton || compton --config ~/.xmonad/compton-focus-dim.conf")
   , ("M-S-d"         , sendMessage ToggleGaps >> sendMessage ToggleStruts)
   , ("M-C-d"         , sendMessage NextLayout)
   , ("M-C-<Return>"  , sendMessage NextLayout)
@@ -424,8 +424,7 @@ tabbed' = tabbed shrinkText myTabbedTheme
 myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
     , ((modm, xK_apostrophe), submapT
-        [ ("m", Just "Notmuch Sync", spawn "notify-send Notmuch Syncing... ; \
-                                          \ notify-send Notmuch \"`notmuch new`\"")
+        [ ("m", Just "Notmuch Sync", spawn "notmuch-sync")
         , ("c", Just "calibre", runOrRaise "calibre" (className =? "libprs500"))
         , ("S-c", Just "Chromium", spawnHere "chromium")
         , ("s", Just "Signal", runOrRaise "signal-desktop"
@@ -435,7 +434,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("S-m", Just "Mumble", spawnHere "mumble")
         , ("p", Just "pavucontrol", spawnHere "pavucontrol")
         , ("a", Nothing, spawnHere "arandr")
-        , ("S-s", Just "Synergy", spawnHere "run-one synergy")
+        , ("S-s", Just "Synergy", spawn "pkill synergy || qsynergy")
         , ("S-t", Just "Transmission", spawnHere "transmission-gtk")
         , ("[", Nothing, spawnHere "touch ~/.pomodoro_session")
         , ("]", Nothing, spawnHere "rm -f ~/.pomodoro_session")
