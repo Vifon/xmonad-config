@@ -2,7 +2,7 @@
 all: xmonad run
 
 xmonad: xmonad.hs
-	ghc -threaded --make xmonad.hs
+	ghc -threaded -ilib --make xmonad.hs
 
 .PHONY: clean
 clean:
