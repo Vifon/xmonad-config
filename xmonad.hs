@@ -31,6 +31,7 @@ import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.Actions.GridSelect as GridSelect
+import qualified XMonad.Actions.Minimize as Min
 import qualified XMonad.Actions.WorkspaceNames as Labels
 
 import XMonad.Layout.BoringWindows
@@ -258,8 +259,8 @@ myKeymap =
   , ("M-j"           , focusDown)
   , ("M-k"           , focusUp)
   , ("M-m"           , focusMaster)
-  , ("M-b"           , withFocused minimizeWindow)
-  , ("M-S-b"         , sendMessage RestoreNextMinimizedWin)
+  , ("M-b"           , withFocused Min.minimizeWindow)
+  , ("M-S-b"         , Min.withLastMinimized Min.maximizeWindow)
   , ("M-<Return>"    , dwmpromote)
   , ("M5-<Return>"   , dwmpromote)
   , ("M-S-<Return>"  , promote)
