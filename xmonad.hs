@@ -236,6 +236,10 @@ myKeymap =
         home <- io getHomeDirectory
         let path = home ++ "/.xmonad/notes"
         appendFilePrompt myXPConfig path)
+  , ("M-S-u"         , do
+        home <- io getHomeDirectory
+        let path = home ++ "/.xmonad/notes"
+        spawn $ "e " ++ path)
   , ("M-C-p"         , resetWSLabel >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
   , ("M-S-="         , resetWSLabel)
