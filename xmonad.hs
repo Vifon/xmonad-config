@@ -341,13 +341,7 @@ myKeymap =
                                        >> (windows . view) ws)]]
   ++
   [(key, sendMessage $ JumpToLayout layout)
-  | (key, layout) <- [("M-v"  , "dwindle")
-                     ,("M-S-v", "vsplit")
-                     ,("M-C-v", "twopane")
-                     ,("M-g"  , "grid")
-                     ,("M-S-f", "full")
-                     ,("M-c"  , "tabbed")
-                     ,("M-C-s", "dishes")]]
+  | (key, layout) <- [("M-c", "tabbed")]]
   ++
   -- workspace switching
   [("M-" ++ m ++ k, f i)
