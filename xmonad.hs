@@ -235,7 +235,8 @@ myConfig h = baseConfig
   where fixJava = setWMName "LG3D"
 
 myKeymap =
-  [ ("M-r"           , shellPromptHere myXPConfig)
+  [ ("M-M5-r"        , shellPromptHere myXPConfig)
+  , ("M-r"           , dmenu >>= spawnHere)
   , ("M-u"           , do
         home <- io getHomeDirectory
         let path = home ++ "/.xmonad/notes"
@@ -369,6 +370,12 @@ myKeymap =
         exit = confirmPrompt myXPConfig "exit" $ io (exitWith ExitSuccess)
         mediaPlayer = toggleFloatNext >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run"
         calculator  = toggleFloatNext >> spawn "emacsclient -c --eval '(full-calc)'"
+        dmenu = io $ do
+          (_, Just dmenuPipe, _, _) <- createProcess (shell "dmenu_path | dmenu -f -l 16")
+                                       { std_out = CreatePipe }
+          program <- hGetLine dmenuPipe
+          hClose dmenuPipe
+          return program
 
 myWorkspaces     = map show $ [1..10]
 myWorkspacesKeys = map show $ [1..9] ++ [0]
