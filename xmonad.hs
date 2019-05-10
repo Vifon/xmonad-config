@@ -265,7 +265,6 @@ myKeymap =
   , ("M-s"           , warp')
   , ("M-;"           , toggleFloatNext >> runLogHook)
   , ("M-S-;"         , spawn "pkill -e compton || compton --config ~/.xmonad/compton-focus-dim.conf")
-  , ("M-S-d"         , sendMessage ToggleGaps >> sendMessage ToggleStruts)
   , ("M-C-d"         , sendMessage NextLayout)
   , ("M-C-<Return>"  , sendMessage NextLayout)
   , ("M-<Tab>"       , ifScreenChanges warp' . focusUrgentOr
@@ -293,6 +292,7 @@ myKeymap =
   , ("M-C-r"         , sendMessage $ Toggle MIRROR)
   , ("M-S-C-r"       , sendMessage $ Toggle REFLECTX)
   , ("M-f"           , sendMessage $ Toggle NBFULL)
+  , ("M-S-f"         , sendMessage ToggleGaps >> sendMessage ToggleStruts)
   , ("M-C-f"         , do
         sendMessage $ Toggle NBFULL
         sendMessage ToggleGaps
