@@ -51,6 +51,7 @@ import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders hiding (Never)
 import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Reflect (REFLECTX(..))
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Spacing
 import XMonad.Layout.StackTile
@@ -209,7 +210,7 @@ myConfig h = baseConfig
         , mouseBindings = myMouseBindings
         , layoutHook    = avoidStruts
                           . boringWindows
-                          . mkToggle (MIRROR ?? NBFULL ?? EOT)
+                          . mkToggle (REFLECTX ?? MIRROR ?? NBFULL ?? EOT)
                           $ onWorkspace "1" (dwindle ||| commonLayouts)
                           $ onWorkspace "float" (named "floating" (commonLayoutHook simplestFloat)
                                                  ||| commonLayouts)
@@ -290,6 +291,7 @@ myKeymap =
   , ("M-,"           , sendMessage (IncMasterN 1))
   , ("M-."           , sendMessage (IncMasterN (-1)))
   , ("M-C-r"         , sendMessage $ Toggle MIRROR)
+  , ("M-S-C-r"       , sendMessage $ Toggle REFLECTX)
   , ("M-f"           , sendMessage $ Toggle NBFULL)
   , ("M-C-f"         , do
         sendMessage $ Toggle NBFULL
