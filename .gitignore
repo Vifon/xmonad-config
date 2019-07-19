@@ -1,0 +1,8 @@
+/prompt-history
+/notes
+*.hi
+*.o
+/xmonad.errors
+/xmonad
+/xmonad-x86_64-linux
+/xmonad-x86_64-linux.old

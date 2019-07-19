@@ -299,8 +299,8 @@ myKeymap =
   , ("M-M1-<Tab>"    , GridSelect.goToSelected myGSConfig)
   , ("M-S-i"         , GridSelect.bringSelected myGSConfig)
   , ("M-S-e"         , exit)
-  , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.err \
-                             \ || xmessage -file ~/.xmonad/xmonad.err")
+  , ("M-S-r"         , spawn "make -C ~/.xmonad 2> ~/.xmonad/xmonad.errors \
+                             \ || xmessage -file ~/.xmonad/xmonad.errors")
   , ("M-S-m"         , mediaPlayer)
   , ("M-<Escape>"    , mediaPlayer)
   , ("C-M-S-o"       , spawnHere "firefox -P default")
