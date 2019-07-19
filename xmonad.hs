@@ -547,7 +547,7 @@ myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 -- | Move the mouse cursor to the center of the current window.
 warp :: X ()
-warp = warpToWindow (1%2) (1%2)
+warp = warpToWindow (1%2) (2%5)
 
 -- | Move the mouse cursor to the center of the current screen.
 warpScreen :: X ()
