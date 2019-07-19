@@ -246,13 +246,9 @@ myKeymap =
         home <- io getHomeDirectory
         let path = home ++ "/.xmonad/notes"
         spawn $ "e " ++ path)
-  , ("M-="           , Labels.renameWorkspace myXPConfig)
-  , ("M-S-="         , resetWSLabel)
   , ("M-C-p"         , resetWSLabel >> DW.renameWorkspace myXPConfig)
   , ("M-o"           , Labels.renameWorkspace myXPConfig)
   , ("M-S-o"         , resetWSLabel)
-  , ("M-M1-="        , labelWorkspaces myWorkspacesLabels)
-  , ("M-M1-["        , labelWorkspaces myWorkspacesLabelsWork)
   , ("M-p"           , DW.selectWorkspace myXPConfig)
   , ("M-S-p"         , DW.withWorkspace myXPConfig (windows . W.shift))
   , ("M-C-S-p"       , DW.withWorkspace myXPConfig
@@ -457,6 +453,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("3", Nothing, spawnHere "~/.screenlayout/external.sh")
         , ("S-d", Just "Debug", debugStackString >>= io . displayText)
         ])
+    , ((modm, xK_equal), submapT
+        [ ("<Space>", Nothing, labelWorkspaces $ WSLabels (replicate 10 "") [])
+        , ("h", Just "Home", labelWorkspaces myWorkspacesLabels)
+        , ("w", Just "Work", labelWorkspaces myWorkspacesLabelsWork)])
     , ((modm, xK_v), bindOn LD [("BSP", submapBSP)
                                ,("", sendMessage $ JumpToLayout "BSP")])
     , ((modm, xK_d), submapT'
