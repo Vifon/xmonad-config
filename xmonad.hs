@@ -387,11 +387,11 @@ data WSLabels =
            [(WorkspaceId, String)] -- ^ Unordered labels
 
 myWorkspacesLabels :: WSLabels
-myWorkspacesLabels = WSLabels ["www" , "IRC", "", "", ""] [("10","")]
+myWorkspacesLabels = WSLabels ["www", "IRC", "", "", ""] [("10","")]
 
 myWorkspacesLabelsWork :: WSLabels
 myWorkspacesLabelsWork = WSLabels
-                           ["www" , "IRC", "chat", "code", "scratch"]
+                           ["www", "IRC", "chat", "code", "scratch"]
                            [("10","worklogs")]
 
 labelWorkspaces :: WSLabels -> X ()
