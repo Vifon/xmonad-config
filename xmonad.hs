@@ -19,7 +19,6 @@ import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DwmPromote
-import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.Promote
@@ -29,6 +28,7 @@ import XMonad.Actions.Submap
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
+import qualified XMonad.Actions.DynamicWorkspaces as DW
 import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.Actions.GridSelect as GridSelect
 import qualified XMonad.Actions.Minimize as Min
@@ -246,18 +246,18 @@ myKeymap =
         home <- io getHomeDirectory
         let path = home ++ "/.xmonad/notes"
         spawn $ "e " ++ path)
-  , ("M-C-p"         , resetWSLabel >> renameWorkspace myXPConfig)
   , ("M-="           , Labels.renameWorkspace myXPConfig)
   , ("M-S-="         , resetWSLabel)
+  , ("M-C-p"         , resetWSLabel >> DW.renameWorkspace myXPConfig)
   , ("M-o"           , Labels.renameWorkspace myXPConfig)
   , ("M-S-o"         , resetWSLabel)
   , ("M-M1-="        , labelWorkspaces myWorkspacesLabels)
   , ("M-M1-["        , labelWorkspaces myWorkspacesLabelsWork)
-  , ("M-p"           , selectWorkspace myXPConfig)
-  , ("M-S-p"         , withWorkspace myXPConfig (windows . W.shift))
-  , ("M-S-<Backspace>", withWorkspace myXPConfig
+  , ("M-p"           , DW.selectWorkspace myXPConfig)
+  , ("M-S-p"         , DW.withWorkspace myXPConfig (windows . W.shift))
+  , ("M-S-<Backspace>", DW.withWorkspace myXPConfig
                         (windows . copy))
-  , ("M-C-<Backspace>", resetWSLabel >> removeWorkspace)
+  , ("M-C-<Backspace>", resetWSLabel >> DW.removeWorkspace)
   , ("M-S-q"         , kill1)
   , ("M-S-M1-q"      , killAllOtherCopies)
   , ("M-C-q"         , calculator)
