@@ -255,6 +255,8 @@ myKeymap =
   , ("M-M1-["        , labelWorkspaces myWorkspacesLabelsWork)
   , ("M-p"           , DW.selectWorkspace myXPConfig)
   , ("M-S-p"         , DW.withWorkspace myXPConfig (windows . W.shift))
+  , ("M-C-S-p"       , DW.withWorkspace myXPConfig
+                       (runOnAllWindows . windows . W.shift))
   , ("M-S-<Backspace>", DW.withWorkspace myXPConfig
                         (windows . copy))
   , ("M-C-<Backspace>", resetWSLabel >> DW.removeWorkspace)
@@ -609,6 +611,16 @@ currentWindowIndex (W.Stack _ up _) = 1 + length up
 -- | Number of windows on the current workspace.
 currentWindowCount :: X Int
 currentWindowCount = windowCount <$> currentStack
+
+-- | Perform x until the current stack is empty.  Use with shift and
+-- similar functions.  WARNING: Becomes an infinite loop if x doesn't
+-- decrease the window count one way or another.
+runOnAllWindows :: X () -> X ()
+runOnAllWindows x = do
+  windowCount <- currentWindowCount
+  if windowCount > 0
+    then x >> runOnAllWindows x
+    else return ()
 
 -- | Focus the urgent window if there are any. Otherwise perform the
 -- passed action.
