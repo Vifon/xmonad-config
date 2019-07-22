@@ -25,15 +25,15 @@ Config { font = "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true,FontAw
                       , "-h", "green" ] 470
                     , Run DiskU [ ("/", " <free>iB")]
                                 [ ] 3000
-                    , Run Volume "pulse" "Master"
+                    , Run Alsa "pulse" "Master"
                       [ "-t", "<status> <volume>%"
                       , "--"
                       , "-O", "", "-C", "grey"
                       , "-o", "", "-c", "red"
-                      ] 10
+                      ]
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=#888888><action=`urxvtcd -e ~/.xmonad/fs-dashboard`><action=`urxvtcd -e htop` button=3>%disku%</action></action></fc> | %battery% | <action=`pavucontrol &> /dev/null` button=3><action=`blueberry &> /dev/null` button=2><action=`amixer -D pulse set Master Playback Switch toggle &> /dev/null`>%pulse:Master%</action></action></action> | <action=`traycalendar --no-tray &> /dev/null`><action=`traycalendar &> /dev/null` button=3><fc=#ee9a00> %date%</fc></action></action>"
+       , template = "%StdinReader% }{ <fc=#888888><action=`urxvtcd -e ~/.xmonad/fs-dashboard`><action=`urxvtcd -e htop` button=3>%disku%</action></action></fc> | %battery% | <action=`pavucontrol &> /dev/null` button=3><action=`blueberry &> /dev/null` button=2><action=`amixer -D pulse set Master Playback Switch toggle &> /dev/null`>%alsa:pulse:Master%</action></action></action> | <action=`traycalendar --no-tray &> /dev/null`><action=`traycalendar &> /dev/null` button=3><fc=#ee9a00> %date%</fc></action></action>"
        }
