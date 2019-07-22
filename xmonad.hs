@@ -446,7 +446,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("S-t", Just "Transmission", spawnHere "transmission-gtk")
         , ("[", Nothing, spawnHere "touch ~/.pomodoro_session")
         , ("]", Nothing, spawnHere "rm -f ~/.pomodoro_session")
-        , ("S-[", Nothing, spawnHere "pymodoro -l 25 | dzen2")
+        , ("S-[", Nothing, spawnHere "pymodoro -l 25 | dzen2 -xs 1")
         , ("S-]", Nothing, spawnHere "pkill pymodoro")
         , ("1", Nothing, spawnHere "~/.screenlayout/single.sh")
         , ("2", Nothing, spawnHere "~/.screenlayout/multidisplay.sh")
@@ -519,7 +519,7 @@ submapT spec = do
                 | (key, Just description, _) <- spec
                 ]
   dzen_std_in <- io $ do
-    (Just std_in, _, _, _) <- createProcess (proc "dzen2" [])
+    (Just std_in, _, _, _) <- createProcess (proc "dzen2" ["-xs", "1"])
                               { std_in = CreatePipe }
     hPutStrLn std_in tooltip
     hFlush std_in
