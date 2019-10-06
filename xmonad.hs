@@ -250,7 +250,9 @@ myKeymap =
   , ("M-C-S-p"       , DW.withWorkspace myXPConfig
                        (runOnAllWindows . windows . W.shift))
   , ("M-S-<Backspace>", DW.withWorkspace myXPConfig
-                        (windows . copy))
+                        (windows . W.shift))
+  , ("M-S-M1-<Backspace>", DW.withWorkspace myXPConfig
+                           (windows . copy))
   , ("M-C-<Backspace>", resetWSLabel >> DW.removeWorkspace)
   , ("M-S-q"         , kill1)
   , ("M-S-M1-q"      , killAllOtherCopies)
