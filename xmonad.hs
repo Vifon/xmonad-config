@@ -337,8 +337,8 @@ myKeymap =
                           ,("C-", \ws -> (windows . W.shift) ws
                                       >> (windows . view) ws)
                           ,("S-", windows . W.shift)
-                          ,("M1-", \ws -> (windows . copy) ws
-                                       >> (windows . view) ws)]]
+                          ,("S-M1-", \ws -> (windows . copy) ws
+                                         >> (windows . view) ws)]]
   ++
   [(key, sendMessage $ JumpToLayout layout)
   | (key, layout) <- [("M-c", "tabbed")]]
@@ -348,7 +348,7 @@ myKeymap =
   | (i, k) <- zip myWorkspaces myWorkspacesKeys
   , (m, f) <- [(""     , ifScreenChanges warp' . toggleOrView')
               ,("S-"   , windows . W.shift)
-              ,("M1-", windows . copy)
+              ,("S-M1-", windows . copy)
               ,("C-"   , Labels.swapWithCurrent)]]
   ++
   -- monitor switching
