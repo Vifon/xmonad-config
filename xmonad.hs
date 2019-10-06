@@ -297,10 +297,9 @@ myKeymap =
                              \ || xmessage -file ~/.xmonad/xmonad.errors")
   , ("M-S-m"         , mediaPlayer)
   , ("M-<Escape>"    , mediaPlayer)
-  , ("C-M-S-o"       , spawnHere "firefox -P default")
-  , ("C-M-S-M5-o"    , ifWindows (className =? "tabbed" <&&> resource =? "surf")
-                                 (\_ -> spawnHere "firefox -P Business")
-                                 (spawnHere "surf-tabbed"))
+  , ("C-M-S-o"       , ifWindows (className =? "Firefox" <&&> resource =? "Navigator")
+                                 (\_ -> spawnHere "firefox -P default --private-window")
+                                 (spawnHere "firefox -P default"))
   ]
   ++
   [ (key, maximizeWindow)
