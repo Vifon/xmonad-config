@@ -58,7 +58,6 @@ import XMonad.Layout.StackTile
 import XMonad.Layout.Tabbed
 import XMonad.Layout.TwoPane
 import qualified XMonad.Layout.Dwindle as Dwindle
-import qualified XMonad.Layout.BinarySpacePartition as BSP
 
 import XMonad.Config.Desktop
 
@@ -85,8 +84,6 @@ import System.Exit
 import System.IO
 import System.Process
 
-
-import XMonad.Actions.ConditionalKeys
 
 main :: IO ()
 main = do
@@ -119,7 +116,6 @@ commonLayouts = named "vsplit" (commonLayoutHook tall)
             ||| named "grid"   (commonLayoutHook Grid)
             ||| named "full"   (smartBorders Full)
             ||| named "tabbed" (commonLayoutHook tabbed')
-            ||| named "BSP"    (borderResize $ commonLayoutHook BSP.emptyBSP)
   where tall = Tall 1 (3/100) (1/2)
 
 myNavigation2DConfig = def { defaultTiledNavigation = centerNavigation }
@@ -280,10 +276,8 @@ myKeymap =
   , ("M-S-k"         , windows W.swapUp)
   , ("M-C-j"         , rotSlavesDown)
   , ("M-C-k"         , rotSlavesUp)
-  , ("M-h"           , bindOn LD [("BSP", sendMessage $ BSP.ShrinkFrom R)
-                                 ,("", sendMessage Shrink)])
-  , ("M-l"           , bindOn LD [("BSP", sendMessage $ BSP.ExpandTowards R)
-                                 ,("", sendMessage Expand)])
+  , ("M-h"           , sendMessage Shrink)
+  , ("M-l"           , sendMessage Expand)
   , ("M-t"           , withFocused $ windows . W.sink)
   , ("M-,"           , sendMessage (IncMasterN 1))
   , ("M-."           , sendMessage (IncMasterN (-1)))
@@ -457,8 +451,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         [ ("<Space>", Nothing, labelWorkspaces $ WSLabels (replicate 10 "") [])
         , ("h", Just "Home", labelWorkspaces myWorkspacesLabels)
         , ("w", Just "Work", labelWorkspaces myWorkspacesLabelsWork)])
-    , ((modm, xK_v), bindOn LD [("BSP", submapBSP)
-                               ,("", sendMessage $ JumpToLayout "BSP")])
     , ((modm, xK_d), submapT'
                      [("d", "dwindle")
                      ,("w", "twopane")
@@ -479,32 +471,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
                                     { std_in = CreatePipe }
           hPutStr std_in text
           hClose std_in
-
-submapBSP :: (?conf :: XConfig Layout) => X()
-submapBSP = submap . mkKeymap ?conf $
-  fmap (\(k,x) -> (k,x >> submapBSP)) (
-    [ ("u", sendMessage BSP.FocusParent)
-    , ("r", sendMessage BSP.Rotate)
-    , ("s", sendMessage BSP.Swap)
-    , ("b", sendMessage BSP.Balance)
-    , ("e", sendMessage BSP.Equalize)
-    ]
-    ++
-    [ (mod ++ k, (sendMessage $ msg dir))
-    | (k, dir) <- [("h", L)
-                  ,("j", D)
-                  ,("k", U)
-                  ,("l", R)]
-    , (mod, msg) <- [("S-", BSP.ExpandTowards)
-                    ,("C-", BSP.ShrinkFrom)]
-    ]
-    ++
-    [ (k, (ifScreenChanges warp' $ windowGo dir False))
-    | (k, dir) <- [("h", L)
-                  ,("j", D)
-                  ,("k", U)
-                  ,("l", R)]]
-  )
 
 -- | A high-level wrapper around `submap` that displays a tooltip with
 -- all the keys and their descriptions.
