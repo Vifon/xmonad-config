@@ -429,17 +429,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     , ((modm, xK_apostrophe), submapT
         [ ("m", Just "Notmuch Sync", spawn "notmuch-sync")
         , ("c", Just "calibre", runOrRaise "calibre" (className =? "libprs500"))
-        , ("S-c", Just "Chromium", spawnHere "chromium")
         , ("s", Just "Signal", runOrRaise "signal-desktop"
                                (resource =? signalResource
                                 <||> className =? "Signal"))
         , ("t", Just "Telegram", runOrRaise "telegram" (className =? "TelegramDesktop"))
-        , ("S-m", Just "Mumble", spawnHere "mumble")
-        , ("p", Just "pavucontrol", spawnHere "pavucontrol")
+        , ("S-m", Just "Mumble", runOrRaise "mumble" (className =? "Mumble"))
+        , ("p", Just "pavucontrol", runOrRaise "pavucontrol" (className =? "Pavucontrol"))
         , ("b", Just "blueberry", spawnHere "blueberry")
         , ("a", Nothing, spawnHere "arandr")
         , ("S-s", Just "Synergy", spawn "pkill synergy || qsynergy")
-        , ("S-t", Just "Transmission", spawnHere "transmission-gtk")
+        , ("S-t", Just "Transmission", spawnHere "transmission-remote-gtk")
         , ("[", Nothing, spawnHere "touch ~/.pomodoro_session")
         , ("]", Nothing, spawnHere "rm -f ~/.pomodoro_session")
         , ("S-[", Nothing, spawnHere "pymodoro -l 25 | dzen2 -xs 1")
