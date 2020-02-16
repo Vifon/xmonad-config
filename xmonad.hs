@@ -213,10 +213,13 @@ myConfig h = baseConfig
                                                  ||| commonLayouts)
                           $ commonLayouts
 
-        , manageHook    = placeHook (inBounds (smart (0.1, 0.1)))
+        , manageHook    = myManageHook2
+                      <+> placeHook (inBounds (smart (0.1, 0.1)))
                       <+> floatNextHook
                       <+> insertPosition Above Newer
                       <+> myManageHook
+                      <+> manageSpawn
+                      <+> manageDocks
                       <+> manageHook baseConfig
         , startupHook   = startupHook baseConfig
                        >> checkKeymap (myConfig h) myKeymap
@@ -394,12 +397,14 @@ labelWorkspaces labels =
         seq_ids = show <$> [1..]
         enumerate = zip seq_ids
 
+myManageHook2 = composeAll
+  [ className =? "Firefox" <&&> role =? "PictureInPicture" --> doSideFloat SE
+  ] where role = stringProperty "WM_WINDOW_ROLE"
+
 myManageHook = composeAll
     [ isFullscreen --> doFullFloat
     , className =? "Keepassx" <&&> title =? "Auto-Type - KeePassX" --> doFloat
     , className =? "TrayCalendar" --> doIgnore
-    , manageSpawn
-    , manageDocks
     ] where role = stringProperty "WM_WINDOW_ROLE"
 
 myFont size = "xft:Bitstream Vera Sans Mono:size="
