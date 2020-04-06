@@ -432,7 +432,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
     [ ((modm .|. shiftMask, xK_space), resetLayouts)
     , ((modm, xK_apostrophe), submapT
         [ ("m", Just "Notmuch Sync", spawn "notmuch-sync")
-        , ("c", Just "calibre", runOrRaise "calibre" (className =? "libprs500"))
+        , ("S-c", Just "calibre", runOrRaise "calibre" (className =? "libprs500"))
         , ("s", Just "Signal", runOrRaise "signal-desktop"
                                (resource =? signalResource
                                 <||> className =? "Signal"))
