@@ -301,9 +301,7 @@ myKeymap =
                              \ || xmessage -file ~/.xmonad/xmonad.errors")
   , ("M-S-m"         , mediaPlayer)
   , ("M-<Escape>"    , mediaPlayer)
-  , ("C-M-S-o"       , ifWindows (className =? "Firefox" <&&> resource =? "Navigator")
-                                 (\_ -> spawnHere "firefox -P default --private-window")
-                                 (spawnHere "firefox -P default"))
+  , ("C-M-S-o"       , webBrowser)
   ]
   ++
   [ (key, maximizeWindow)
@@ -367,6 +365,9 @@ myKeymap =
         exit = confirmPrompt myXPConfig "exit" $ io (exitWith ExitSuccess)
         mediaPlayer = toggleFloatNext >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run"
         calculator  = toggleFloatNext >> spawn "emacsclient -c --eval '(full-calc)'"
+        webBrowser = ifWindows (className =? "Firefox" <&&> resource =? "Navigator")
+                               (\_ -> spawnHere "firefox -P default --private-window")
+                               (spawnHere "firefox -P default")
         dmenu = io $ do
           (_, Just dmenuPipe, _, _) <- createProcess (shell "dmenu_path | dmenu -f -l 16")
                                        { std_out = CreatePipe }
