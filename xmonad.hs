@@ -223,7 +223,6 @@ myConfig h = baseConfig
                       <+> manageHook baseConfig
         , startupHook   = startupHook baseConfig
                        >> checkKeymap (myConfig h) myKeymap
-                       >> labelWorkspaces myWorkspacesLabels
                        >> fixJava
         , workspaces    = myWorkspaces
         , logHook       = logHook baseConfig <+> myLogHook h
