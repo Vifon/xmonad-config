@@ -453,9 +453,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = let ?conf = conf in M.fromList
         , ("S-d", Just "Debug", debugStackString >>= io . displayText)
         ])
     , ((modm, xK_equal), submapT
-        [ ("<Space>", Nothing, labelWorkspaces $ WSLabels (replicate 10 "") [])
-        , ("h", Just "Home", labelWorkspaces myWorkspacesLabels)
-        , ("w", Just "Work", labelWorkspaces myWorkspacesLabelsWork)])
+        [ ("<Space>", Just "clear", labelWorkspaces $ WSLabels (replicate 10 "") [])
+        , ("h", Just "home", labelWorkspaces myWorkspacesLabels)
+        , ("w", Just "work", labelWorkspaces myWorkspacesLabelsWork)])
     , ((modm, xK_d), submapT'
                      [("d", "dwindle")
                      ,("w", "twopane")
