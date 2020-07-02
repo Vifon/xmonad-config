@@ -98,7 +98,7 @@ main = do
   where xmobarCommand =
           "exec xmobar"
 
-term = "urxvtcd"
+term = "alacritty"
 
 mySortOrder = getSortByIndex
 
@@ -363,7 +363,7 @@ myKeymap =
         view           = W.greedyView
         resetWSLabel   = Labels.setCurrentWorkspaceName ""
         exit = confirmPrompt myXPConfig "exit" $ io (exitWith ExitSuccess)
-        mediaPlayer = toggleFloatNext >> spawn "urxvtcd -g 150x32 -e ncmpcpp-run"
+        mediaPlayer = toggleFloatNext >> spawn "alacritty -d 150 32 -e ncmpcpp-run"
         calculator  = toggleFloatNext >> spawn "emacsclient -c --eval '(full-calc)'"
         webBrowser = ifWindows (className =? "Firefox" <&&> resource =? "Navigator")
                                (\_ -> spawnHere "firefox -P default --private-window")
