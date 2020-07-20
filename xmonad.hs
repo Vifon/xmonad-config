@@ -334,13 +334,15 @@ myKeymap =
   -- M-S-w - send to empty desktop
   -- M-C-w - send to empty desktop and switch there
   -- M-S-A-w - clone to empty desktop and switch there
-  [("M-" ++ modifier ++ "w", doTo Next EmptyWS mySortOrder action)
-  | (modifier, action) <- [(""  , windows . view)
-                          ,("C-", \ws -> (windows . W.shift) ws
+  [("M-" ++ modifier ++ "w", doTo Next pred mySortOrder action)
+  | (modifier, pred, action) <- [(""  , HiddenEmptyWS, windows . view)
+                                ,("C-", EmptyWS,
+                                  \ws -> (windows . W.shift) ws
                                       >> (windows . view) ws)
-                          ,("S-", windows . W.shift)
-                          ,("S-M1-", \ws -> (windows . copy) ws
-                                         >> (windows . view) ws)]]
+                                ,("S-", EmptyWS, windows . W.shift)
+                                ,("S-M1-", EmptyWS,
+                                  \ws -> (windows . copy) ws
+                                      >> (windows . view) ws)]]
   ++
   [(key, sendMessage $ JumpToLayout layout)
   | (key, layout) <- [("M-c", "tabbed")]]
