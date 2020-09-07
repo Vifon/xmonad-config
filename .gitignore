@@ -6,3 +6,8 @@
 /xmonad
 /xmonad-x86_64-linux
 /xmonad-x86_64-linux.old
+/.stack-work/
+/stack.yaml.lock
+/xmobar-git/
+/xmonad-contrib-git/
+/xmonad-git/
