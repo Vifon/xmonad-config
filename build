@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -o errexit -o nounset -o pipefail
+
+exec stack ghc -- -threaded -i -ilib --make xmonad.hs
