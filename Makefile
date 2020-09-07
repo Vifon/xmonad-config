@@ -22,18 +22,24 @@ xmonad.tar.gz: xmonad.hs xmobarrc xmonad Makefile
 	tar zvcf xmonad.tar.gz -C .. $(foreach file,$^,.xmonad/${file}) .xmobarrc
 
 .PHONY: install
-install: ~/.xmonad ~/.xmobarrc
+install: ~/.xmonad ~/.xmobarrc stack
 
 ~/.xmonad:
 	ln -s ${PWD} ~/.xmonad
 ~/.xmobarrc:
 	ln -s ~/.xmonad/xmobarrc ~/.xmobarrc
 
-.PHONY: install-xmonad install-xmonad-contrib install-xmobar cabal
-cabal: install-xmonad install-xmonad-contrib install-xmobar
-install-xmonad:
-	cabal install xmonad
-install-xmonad-contrib:
-	cabal install xmonad-contrib --flags='use_xft'
-install-xmobar:
-	cabal install xmobar --flags='with_xft with_utf8 with_alsa with_datezone with_threaded'
+.PHONY: git
+git: xmonad-git xmonad-contrib-git xmobar-git
+
+xmonad-git:
+	git clone "https://github.com/xmonad/xmonad" xmonad-git
+xmonad-contrib-git:
+	git clone "https://github.com/xmonad/xmonad-contrib" xmonad-contrib-git
+xmobar-git:
+	git clone "https://github.com/jaor/xmobar" xmobar-git
+
+.PHONY: stack
+stack: .stack-work
+.stack-work: | git
+	stack install
